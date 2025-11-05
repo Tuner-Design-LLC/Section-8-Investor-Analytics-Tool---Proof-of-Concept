@@ -1,3 +1,5 @@
+# NOTE - UML diagrams and further documentation to be added in future iterations.
+
 import pandas as pd
 from typing import Optional, Dict
 
@@ -6,7 +8,7 @@ HUDCrawler - Prototype static file crawler for HUD General datasets.
 Will normalize common fields across different HUD general files (Income Limits, Assisted Units, LIHTC, MF properties).
 Designed to be replaced by live API calls later to page HTML; for now it will read CSV/XLSX files statically.
 
-Core normalized attributes included (not all must exist in source file):
+Core normalized attributes (not all must exist in source file to run):
 - dataset_name, fiscal_year, state_name, state_code, county_name, fips_code, hud_geoid, msa_code, area_type,
   ami_median_family_income, ami_30_percent_limit, ami_50_percent_limit, ami_80_percent_limit, household_size,
   program_type, sub_program, total_units, occupied_units, vacancy_rate, assisted_units, funding_source,
