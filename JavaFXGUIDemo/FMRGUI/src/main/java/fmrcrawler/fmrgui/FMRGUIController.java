@@ -35,6 +35,9 @@ public class FMRGUIController {
     @FXML
     private TextField ManualEnterReport;
 
+    @FXML
+    private TextField FMRAverage;
+
     @FXML //copy of OpenReport method with a preset file path used for testing
     void TestLoad(ActionEvent event) throws ParserConfigurationException, IOException, SAXException {
         GUI1.setFilePath("C:\\\\Python\\\\221Project\\\\TestingFMRReport.xml");
@@ -58,6 +61,8 @@ public class FMRGUIController {
         GUI1 = new FMRGUI();
 
         updateCurrentReportClear();
+
+
     }
 
     @FXML
@@ -91,6 +96,7 @@ public class FMRGUIController {
         CountyName.setText(String.format(GUI1.getCurrentReportCountyName()));
         NumBedrooms.setText(String.format(GUI1.getCurrentReportNumOfBedrooms()));
         FMRNumber.setText(String.format(GUI1.getCurrentReportFMRNumber()));
+        FMRAverage.setText(String.format("%.2f",GUI1.getAverageFMRNumber()));
     }
 
     private void updateCurrentReportClear(){
@@ -100,6 +106,7 @@ public class FMRGUIController {
         CountyName.setText("");
         NumBedrooms.setText("");
         FMRNumber.setText("");
+        FMRAverage.setText("0");
     }
 
 }

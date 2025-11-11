@@ -14,10 +14,24 @@ public class ReportHandler extends DefaultHandler {
         return reports;
     }
 
+    //checks to see if a report with the given ID exists in the list of reports
+    public Boolean checkForReportID(int ID){
+        for (FMRReport report : reports) {
+            System.out.print("Base "+report.getReportID());
+            System.out.println("   ID "+ID);
+            if (Integer.parseInt(report.getReportID()) == ID) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
         if (qName.equalsIgnoreCase("Report")) {
             currentReport = new FMRReport();
+            currentReport.setReportID(attributes.getValue(0));
+            //TODO REMOVESystem.out.println(currentReport.getReportID());
         }
         content.setLength(0);
     }

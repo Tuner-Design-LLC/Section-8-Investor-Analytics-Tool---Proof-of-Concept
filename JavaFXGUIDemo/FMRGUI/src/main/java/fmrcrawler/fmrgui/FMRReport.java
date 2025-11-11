@@ -1,6 +1,7 @@
 package fmrcrawler.fmrgui;
 
 public class FMRReport {
+    private String reportID;
     private String fiscalYear;
     private String stateName;
     private String stateCode;
@@ -28,6 +29,10 @@ public class FMRReport {
     FMRReport(){}
 
     //getters
+    public String getReportID() {
+        return reportID;
+    }
+
     public String getCrawlerRunData() {
         return crawlerRunData;
     }
@@ -121,6 +126,10 @@ public class FMRReport {
     }
 
     //setters
+    public void setReportID(String reportID) {
+        this.reportID = reportID;
+    }
+
     public void setFiscalYear(String fiscalYear) {
         this.fiscalYear = fiscalYear;
     }

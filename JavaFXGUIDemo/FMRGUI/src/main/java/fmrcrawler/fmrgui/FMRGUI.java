@@ -3,6 +3,7 @@ package fmrcrawler.fmrgui;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -20,10 +21,12 @@ public class FMRGUI {
         currentReport=0;
     }
 
+    //sets the file path to load from
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
 
+    //opens the XML file at the given path and extracts the data into reports
     public void openXMLReport() throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
@@ -32,7 +35,20 @@ public class FMRGUI {
         parser.parse(new File(filePath), handler);
         //parser.parse(new File("C:\\Python\\221Project\\TestingFMRReport.xml"), handler);
 
-        reports.addAll(handler.getReports());
+
+        //create a temp list of imported reports
+        ArrayList<FMRReport> tempReports = new ArrayList<>(handler.getReports());
+        for (FMRReport report:tempReports){
+            boolean flag = true;
+            for(FMRReport baseReport:reports){
+                if (Integer.parseInt(report.getReportID()) == Integer.parseInt(baseReport.getReportID())) {
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag)
+                reports.add(report);
+        }
     }
 
     public int getNumOfReports(){
@@ -57,6 +73,14 @@ public class FMRGUI {
         if (currentReport > 0){
             currentReport--;
         }
+    }
+
+    public double getAverageFMRNumber(){
+        double temp=0;
+        for(FMRReport report: reports){
+            temp+= Double.parseDouble(report.getFairMarketRent());
+        }
+        return (temp/reports.size());
     }
 
     public String getCurrentReportFiscalYear(){
