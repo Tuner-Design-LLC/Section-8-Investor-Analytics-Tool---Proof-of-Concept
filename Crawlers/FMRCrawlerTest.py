@@ -1,6 +1,6 @@
 # Basic class to represent a Fair Market Rent (FMR) Crawler
 # At this moment the purpose of this class is to impliment the core functions required to create a report object than can be exported to an xml format for storage and display later down the line.
-# THIS CLASS IS A PLACEHOLDER - it does not read in any data its mainly a test for creating reports and exporting them to XML format.
+# THIS CLASS IS A PLACEHOLDER - it does not read in any data; its mainly a test for creating reports and exporting them to XML format.
 import xml.etree.ElementTree as ET
 import FMRReport
 

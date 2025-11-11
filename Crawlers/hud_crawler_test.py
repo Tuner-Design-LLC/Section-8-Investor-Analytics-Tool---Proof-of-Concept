@@ -1,23 +1,21 @@
-"""
-hud_crawler_test.py
-
-Simple test harness for the HUDCrawler in the same style as
-`FMRCrawlerTest.py`. This script builds a tiny test DataFrame with
-representative columns, runs the crawler's normalize() method, writes
-a CSV for inspection and prints a small summary.
-"""
-# NOTICE - This module is purely for testing to match the FMR Crawler
-# Future iterations of FMR & HUD Crawler before class demo will read off of the demo Excel docs
-
 from datetime import datetime, timezone
 import os
 import pandas as pd
 import xml.etree.ElementTree as ET
 from hud_crawler import HUDCrawler
 
+"""
+hud_crawler_test.py
 
+Simple test adapter for the HUDCrawler in the same method as
+FMRCrawlerTest.py. This script builds a small test DataFrame with
+representative columns, runs the crawler's normalize() method, writes
+a CSV for inspection, and prints a small summary.
+"""
+
+# This function generates a small test DataFrame using pandas with representative HUD data
 def generate_test_df():
-    # Minimal set of fields; HUDCrawler.normalize will add any missing columns
+    # Minimal array of base fields; HUDCrawler.normalize() will add any missing columns
     base = {
         "dataset_name": "TestHUDDataset",
         "fiscal_year": "2025",
@@ -57,7 +55,7 @@ def generate_test_df():
         "hud_region_name": None,
         "rural_indicator": None,
         "source_url": "http://example.org/dataset",
-    # use timezone-aware UTC datetimes to avoid deprecation warnings
+    # Handling of datetime to bypass deprecation notices - TBD in future iteration post-class submission
     "scrape_date": datetime.now(timezone.utc).isoformat(),
     "dataset_last_updated": datetime.now(timezone.utc).isoformat(),
         "update_frequency": "manual",
@@ -67,7 +65,7 @@ def generate_test_df():
     }
 
     rows = []
-    # create three simple rows to ensure normalize does column population and type coercion
+    # Create three rows to ensure normalize() does column population and type coercion correctly
     for i in range(3):
         r = base.copy()
         r.update({
@@ -85,46 +83,29 @@ def generate_test_df():
 
     return pd.DataFrame(rows)
 
-
+# This function runs the test using HUDCrawler and the generated test DataFrame
 def run_test():
     crawler = HUDCrawler()
-
-    # Build test dataframe and feed it to the crawler
-    test_df = generate_test_df()
-    crawler.raw = test_df
+    # Read the provided Excel document if it exists; otherwise fall back on generated test DataFrame object
+    excel_path = os.path.join(os.path.dirname(__file__), "HUD_Crawler_Test_Excel.xlsx")
+    if os.path.exists(excel_path):
+        print(f"Loading test Excel fixture: {excel_path}")
+        crawler.load(excel_path)
+    else:
+        print("Excel fixture not found; using generated test DataFrame.")
+        crawler.raw = generate_test_df()
 
     normalized = crawler.normalize()
 
-    # Persist to a simple CSV for inspection (optional)
+    # Create a simple CSV for inspection (optional)
     out_csv = os.path.join(os.path.dirname(__file__), "TestHUDReport.csv")
     normalized.to_csv(out_csv, index=False)
 
-    # Create an XML report that mirrors the FMRCrawler.createXMLReport style
-    def createXMLReport(df: pd.DataFrame, out_path: str):
-        root = ET.Element("HUDReports")
-        TempIDTracker = 0
-        for _, row in df.iterrows():
-            report_elem = ET.SubElement(root, "Report", id=str(TempIDTracker))
-            # write each column as a child element; convert values to strings
-            for col in df.columns:
-                val = row[col]
-                text = "" if pd.isna(val) else str(val)
-                # sanitize tag name by removing spaces
-                tag = str(col).replace(" ", "")
-                ET.SubElement(report_elem, tag).text = text
-            TempIDTracker += 1
-
-        ET.indent(root, space="  ", level=0)
-        tree = ET.ElementTree(root)
-        # write with short_empty_elements=False so empty elements are written
-        # with explicit start/end tags (e.g. <tag></tag>) instead of self-closing (e.g. <tag />)
-        with open(out_path, "wb") as f:
-            tree.write(f, encoding="utf-8", xml_declaration=True, short_empty_elements=False)
-
+    # Create XML report using the HUDCrawler helper
     out_xml = os.path.join(os.path.dirname(__file__), "TestHUDReport.xml")
-    createXMLReport(normalized, out_xml)
+    crawler.create_xml_report(out_xml, normalized)
 
-    # Validate the written XML can be parsed
+    # Validate/error handling that the written XML can be parsed
     try:
         ET.parse(out_xml)
         xml_status = "OK"
@@ -134,6 +115,7 @@ def run_test():
     print(f"Wrote {out_csv} ({len(normalized)} rows)")
     print(f"Wrote {out_xml} ({len(normalized)} rows) — XML parse: {xml_status}")
     print("Summary:", crawler.summary())
+    print("\nExported all reports to TestHUDReport.xml successfully!")
 
 
 if __name__ == "__main__":
