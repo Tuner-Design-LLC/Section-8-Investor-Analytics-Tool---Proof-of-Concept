@@ -1,41 +1,14 @@
 # Basic class to represent a Fair Market Rent (FMR) Crawler
-# At this moment the purpose of this class is to impliment the core functions required to create a report object than can be exported to an xml format for storage and display later down the line.
-# THIS CLASS IS A PLACEHOLDER - it does not read in any data; its mainly a test for creating reports and exporting them to XML format.
+# This class is desigened to create report objects and export them to XML format.
+# The scraper class will impliment this class to create report objects from scraped data.
 import xml.etree.ElementTree as ET
 import FMRReport
 
 class FMRCrawler:
 
     #the report list represents a list of all reports created by the crawler which can be exported to XML
-    #TODO for now the crawler includes all relevant data attributes so you could implement the crawler to populate each attribute
-    #then export it to a report and add to the list using the premade appendCurrentReportToList() method
-    #this is just an example implementation of the crawler you could also remove the class attributes and have the crawler directly create reports
     def __init__(self):
         self._reportsList = []
-
-        self._fiscal_year = None
-        self._state_name = None
-        self._state_code = None
-        self._county_name = None
-        self._fips_code = None
-        self._hud_geo_id = None
-        self._msa_code = None
-        self._area_type = None
-        self._hud_region_code = None
-        self._zip_code = None
-        self._num_bedrooms = None
-        self._fair_market_rent = None
-        self._percentile_type = None
-        self._bedroom_dist_source = None
-        self._survey_source_year = None
-        self._adjustment_factor = None
-        self._is_small_area_fmr = None
-        self._median_household_income = None
-        self._source_url = None
-        self._scrape_date = None
-        self._version_hash = None
-        self._update_freq = None
-        self._crawler_run_data = None
 
     #create an XML report from a list of report objects
     def createXMLReport(self):
@@ -73,7 +46,7 @@ class FMRCrawler:
             ET.SubElement(report_elem, "CrawlerRunData").text = report.get_crawler_run_data()
             TempIDTracker+=1
 
-        #TODO indent the XML so the file is more human readable (this can be removed once a GUI for viewing reports is created as it adds extra size to the file)
+        #TODO this indents the XML so the file is more human readable (this can be removed once a GUI for viewing reports is created as it adds extra size to the file)
         ET.indent(root, space="  ", level=0)
 
         # create a tree from the root which is used to create the XML file
@@ -83,15 +56,6 @@ class FMRCrawler:
         with open("TestReport.xml", "wb") as file:
             tree.write(file, encoding="utf-8", xml_declaration=True)
 
-    #create and return a report object
-    #TODO this method could be called after each iteration of scraping a website to create a report, the report would then be added to the list
-    def generate_report(self):
-        return FMRReport.FMRCrawlerReport(self._fiscal_year,self._state_name,self._state_code,self._county_name,self._fips_code,self._hud_geo_id,
-            self._msa_code,self._area_type,self._hud_region_code, self._zip_code,self._num_bedrooms, self._fair_market_rent,
-            self._percentile_type,self._bedroom_dist_source,self._survey_source_year,self._adjustment_factor, self._is_small_area_fmr,
-            self._median_household_income, self._source_url, self._scrape_date,self._version_hash,self._update_freq,
-            self._crawler_run_data)
-    
     #create and return a report object that has basic test data
     def generate_test_report(self):
         return FMRReport.FMRCrawlerReport("Test00","Test01","Test02","Test03","Test04","Test05",
@@ -102,10 +66,6 @@ class FMRCrawler:
     #append a report to the list of reports
     def appendReportToList(self, report):
         self._reportsList.append(report)
-
-    #TODO an example method that would export the current crawler temp data to a report and append to the list
-    def appendCurrentReportToList(self):
-        self._reportsList.append(self.generate_report())
 
 if __name__ == "__main__":
     crawler = FMRCrawler()

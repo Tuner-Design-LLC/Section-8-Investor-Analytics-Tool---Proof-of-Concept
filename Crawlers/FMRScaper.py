@@ -3,7 +3,7 @@ from FMRReport import FMRCrawlerReport
 from FMRCrawlerTest import FMRCrawler
 
 # This is the path to the Excel File
-EXCEL_FILE = "D:\Downloads\FMR_Crawler_Test_Excel (1).xlsx"
+EXCEL_FILE = "C:\\Users\\Kevin\\Downloads\\FMR_Crawler_Test_Excel.xlsx"
 
 def scrape_data(file_path):
     # Load Excel file

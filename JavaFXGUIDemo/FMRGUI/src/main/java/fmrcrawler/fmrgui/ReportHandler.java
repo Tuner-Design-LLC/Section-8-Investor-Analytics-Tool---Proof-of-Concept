@@ -31,7 +31,6 @@ public class ReportHandler extends DefaultHandler {
         if (qName.equalsIgnoreCase("Report")) {
             currentReport = new FMRReport();
             currentReport.setReportID(attributes.getValue(0));
-            //TODO REMOVESystem.out.println(currentReport.getReportID());
         }
         content.setLength(0);
     }

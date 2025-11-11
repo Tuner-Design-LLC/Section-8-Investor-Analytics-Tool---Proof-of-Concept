@@ -14,10 +14,13 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class FMRGUI {
     private String filePath;
+    private Boolean filterEnabled;
     private int currentReport;
     private ArrayList<FMRReport> reports = new ArrayList<>();
+    private ArrayList<FMRReport> reportsFiltered = new ArrayList<>();
 
     public FMRGUI(){
+        filterEnabled = false;
         currentReport=0;
     }
 
@@ -51,6 +54,7 @@ public class FMRGUI {
         }
     }
 
+    //methods for dealing with the current number of reports and the selected report
     public int getNumOfReports(){
         return reports.size();
     }
@@ -63,26 +67,94 @@ public class FMRGUI {
         currentReport = report;
     }
 
+    //increase current report
     public void increaseCurrentReport(){
         if (currentReport+1 < getNumOfReports()){
             currentReport++;
         }
     }
 
+    //decrease current report
     public void decreaseCurrentReport(){
         if (currentReport > 0){
             currentReport--;
         }
     }
 
+    //average methods include two cases depending on if the filter is enabled or not
     public double getAverageFMRNumber(){
         double temp=0;
-        for(FMRReport report: reports){
-            temp+= Double.parseDouble(report.getFairMarketRent());
+        if(filterEnabled){
+            for(FMRReport report: reportsFiltered){
+                temp+= Double.parseDouble(report.getFairMarketRent());
+            }
+            return (temp/reportsFiltered.size());
         }
-        return (temp/reports.size());
+        else{
+            for(FMRReport report: reports){
+                temp+= Double.parseDouble(report.getFairMarketRent());
+            }
+            return (temp/reports.size());
+        }
     }
 
+    public double getAverageIncome(){
+        double temp=0;
+        if(filterEnabled){
+            for(FMRReport report: reportsFiltered){
+                temp+= Double.parseDouble(report.getMedianHouseholdIncome());
+            }
+            return (temp/reportsFiltered.size());
+        }
+        else{
+            for(FMRReport report: reports){
+                temp+= Double.parseDouble(report.getMedianHouseholdIncome());
+            }
+            return (temp/reports.size());
+        }
+    }
+
+    public double getAverageBedrooms(){
+        double temp=0;
+        if(filterEnabled){
+            for(FMRReport report: reportsFiltered){
+                temp+= Double.parseDouble(report.getNumBedrooms());
+            }
+            return (temp/reportsFiltered.size());
+        }
+        else{
+            for(FMRReport report: reports){
+                temp+= Double.parseDouble(report.getNumBedrooms());
+            }
+            return (temp/reports.size());
+        }
+    }
+
+    //create a filtered list of reports by state
+    public void filterReportsByState(String stateKey){
+        for(FMRReport report: reports){
+            if(Objects.equals(report.getStateName(), stateKey)){
+                reportsFiltered.add(report);
+            }
+        }
+    }
+
+    //remove all filtered data
+    public void resetFilterReportList(){
+        reportsFiltered = new ArrayList<>();
+    }
+
+    //get all num of filtered reports
+    public int getNumOfFilteredReports(){
+        return reportsFiltered.size();
+    }
+
+    //toggle the filter on or off
+    public void toggleFilter(){
+        filterEnabled = !filterEnabled;
+    }
+
+    //standard get methods for the GUI
     public String getCurrentReportFiscalYear(){
         return reports.get(currentReport).getFiscalYear();
     }
@@ -97,5 +169,21 @@ public class FMRGUI {
 
     public String getCurrentReportFMRNumber(){
         return reports.get(currentReport).getFairMarketRent();
+    }
+
+    public String getCurrentReportState(){
+        return reports.get(currentReport).getStateName();
+    }
+
+    public String getCurrentReportZipCode(){
+        return reports.get(currentReport).getZipCode();
+    }
+
+    public String getCurrentReportMarketType(){
+        return reports.get(currentReport).getAreaType();
+    }
+
+    public String getCurrentReportHouseholdIncome(){
+        return reports.get(currentReport).getMedianHouseholdIncome();
     }
 }
