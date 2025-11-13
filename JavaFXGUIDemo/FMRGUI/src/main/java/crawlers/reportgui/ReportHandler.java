@@ -1,4 +1,4 @@
-package fmrcrawler.fmrgui;
+package crawlers.reportgui;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -12,18 +12,6 @@ public class ReportHandler extends DefaultHandler {
 
     public ArrayList<FMRReport> getReports() {
         return reports;
-    }
-
-    //checks to see if a report with the given ID exists in the list of reports
-    public Boolean checkForReportID(int ID){
-        for (FMRReport report : reports) {
-            System.out.print("Base "+report.getReportID());
-            System.out.println("   ID "+ID);
-            if (Integer.parseInt(report.getReportID()) == ID) {
-                return false;
-            }
-        }
-        return true;
     }
 
     @Override

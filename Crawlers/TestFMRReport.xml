@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <FMRReports>
-  <Report id="0">
+  <Report id="0" type="FMR">
     <FiscalYear>2025</FiscalYear>
     <StateName>Pennsylvania</StateName>
     <StateCode>PA</StateCode>
@@ -25,7 +25,7 @@
     <UpdateFrequency>Annual</UpdateFrequency>
     <CrawlerRunData>ETL_001</CrawlerRunData>
   </Report>
-  <Report id="1">
+  <Report id="1" type="FMR">
     <FiscalYear>2025</FiscalYear>
     <StateName>Pennsylvania</StateName>
     <StateCode>PA</StateCode>
@@ -50,7 +50,7 @@
     <UpdateFrequency>Annual</UpdateFrequency>
     <CrawlerRunData>ETL_001</CrawlerRunData>
   </Report>
-  <Report id="2">
+  <Report id="2" type="FMR">
     <FiscalYear>2025</FiscalYear>
     <StateName>Pennsylvania</StateName>
     <StateCode>PA</StateCode>
@@ -75,7 +75,7 @@
     <UpdateFrequency>Annual</UpdateFrequency>
     <CrawlerRunData>ETL_001</CrawlerRunData>
   </Report>
-  <Report id="3">
+  <Report id="3" type="FMR">
     <FiscalYear>2025</FiscalYear>
     <StateName>Pennsylvania</StateName>
     <StateCode>PA</StateCode>
@@ -100,7 +100,7 @@
     <UpdateFrequency>Annual</UpdateFrequency>
     <CrawlerRunData>ETL_001</CrawlerRunData>
   </Report>
-  <Report id="4">
+  <Report id="4" type="FMR">
     <FiscalYear>2025</FiscalYear>
     <StateName>Pennsylvania</StateName>
     <StateCode>PA</StateCode>
@@ -125,7 +125,7 @@
     <UpdateFrequency>Annual</UpdateFrequency>
     <CrawlerRunData>ETL_001</CrawlerRunData>
   </Report>
-  <Report id="5">
+  <Report id="5" type="FMR">
     <FiscalYear>2025</FiscalYear>
     <StateName>Pennsylvania</StateName>
     <StateCode>PA</StateCode>
@@ -150,7 +150,7 @@
     <UpdateFrequency>Annual</UpdateFrequency>
     <CrawlerRunData>ETL_001</CrawlerRunData>
   </Report>
-  <Report id="6">
+  <Report id="6" type="FMR">
     <FiscalYear>2025</FiscalYear>
     <StateName>New Jersey</StateName>
     <StateCode>NJ</StateCode>

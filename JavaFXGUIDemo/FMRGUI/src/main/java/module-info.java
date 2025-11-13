@@ -5,6 +5,6 @@ module fmrcrawler.fmrgui {
     requires org.controlsfx.controls;
     requires java.xml;
 
-    opens fmrcrawler.fmrgui to javafx.fxml;
-    exports fmrcrawler.fmrgui;
+    opens crawlers.reportgui to javafx.fxml;
+    exports crawlers.reportgui;
 }

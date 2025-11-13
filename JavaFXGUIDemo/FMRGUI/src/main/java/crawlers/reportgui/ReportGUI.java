@@ -1,4 +1,4 @@
-package fmrcrawler.fmrgui;
+package crawlers.reportgui;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,20 +8,21 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.w3c.dom.*;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
-public class FMRGUI {
+public class ReportGUI {
     private String filePath;
     private Boolean filterEnabled;
     private int currentReport;
+    private int currentReportPHP;
     private ArrayList<FMRReport> reports = new ArrayList<>();
+    private ArrayList<PHAReport> PHPreports = new ArrayList<>();
     private ArrayList<FMRReport> reportsFiltered = new ArrayList<>();
 
-    public FMRGUI(){
+    public ReportGUI(){
         filterEnabled = false;
         currentReport=0;
+        currentReportPHP=0;
     }
 
     //sets the file path to load from
@@ -36,8 +37,6 @@ public class FMRGUI {
 
         ReportHandler handler = new ReportHandler();
         parser.parse(new File(filePath), handler);
-        //parser.parse(new File("C:\\Python\\221Project\\TestingFMRReport.xml"), handler);
-
 
         //create a temp list of imported reports
         ArrayList<FMRReport> tempReports = new ArrayList<>(handler.getReports());
@@ -54,9 +53,39 @@ public class FMRGUI {
         }
     }
 
+    public void openXMLReportPHA() throws ParserConfigurationException, SAXException, IOException {
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        SAXParser parser = factory.newSAXParser();
+
+        ReportHandlerPHA handler = new ReportHandlerPHA();
+        parser.parse(new File(filePath), handler);
+
+        //create a temp list of imported reports
+        ArrayList<PHAReport> tempReports = new ArrayList<>(handler.getReports());
+        for (PHAReport report:tempReports){
+            boolean flag = true;
+            for(PHAReport baseReport:PHPreports){
+                if (Integer.parseInt(report.getReportID()) == Integer.parseInt(baseReport.getReportID())) {
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag)
+                PHPreports.add(report);
+        }
+    }
+
     //methods for dealing with the current number of reports and the selected report
     public int getNumOfReports(){
+        return reports.size()+PHPreports.size();
+    }
+
+    public int getNumOfFMRReports(){
         return reports.size();
+    }
+
+    public int getNumOfPHAReports(){
+        return PHPreports.size();
     }
 
     public int getCurrentReport(){
@@ -67,9 +96,17 @@ public class FMRGUI {
         currentReport = report;
     }
 
+    public int getCurrentReportPHA(){
+        return currentReportPHP;
+    }
+
+    public void setCurrentReportPHA(int report){
+        currentReportPHP = report;
+    }
+
     //increase current report
     public void increaseCurrentReport(){
-        if (currentReport+1 < getNumOfReports()){
+        if (currentReport+1 < getNumOfFMRReports()){
             currentReport++;
         }
     }
@@ -78,6 +115,20 @@ public class FMRGUI {
     public void decreaseCurrentReport(){
         if (currentReport > 0){
             currentReport--;
+        }
+    }
+
+    //increase current report PHP
+    public void increaseCurrentReportPHA(){
+        if (currentReportPHP+1 < getNumOfPHAReports()){
+            currentReportPHP++;
+        }
+    }
+
+    //decrease current report PHP
+    public void decreaseCurrentReportPHA(){
+        if (currentReportPHP > 0){
+            currentReportPHP--;
         }
     }
 
@@ -185,5 +236,26 @@ public class FMRGUI {
 
     public String getCurrentReportHouseholdIncome(){
         return reports.get(currentReport).getMedianHouseholdIncome();
+    }
+
+    //get methods for PHP reports
+    public String getCurrentPHAReportState(){
+        return PHPreports.get(currentReportPHP).getStateName();
+    }
+
+    public String getCurrentPHAReportCity(){
+        return PHPreports.get(currentReportPHP).getCity();
+    }
+
+    public String getCurrentPHAReportCounty(){
+        return PHPreports.get(currentReportPHP).getCountyName();
+    }
+
+    public String getCurrentPHAReportZipCode(){
+        return PHPreports.get(currentReportPHP).getZipCode();
+    }
+
+    public String getCurrentPHAReportAddress(){
+        return PHPreports.get(currentReportPHP).getAddress();
     }
 }

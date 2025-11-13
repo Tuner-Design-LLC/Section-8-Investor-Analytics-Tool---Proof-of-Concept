@@ -1,7 +1,8 @@
-package fmrcrawler.fmrgui;
+package crawlers.reportgui;
 
 public class FMRReport {
     private String reportID;
+    private String reportType;
     private String fiscalYear;
     private String stateName;
     private String stateCode;
@@ -31,6 +32,10 @@ public class FMRReport {
     //getters
     public String getReportID() {
         return reportID;
+    }
+
+    public String getReportType() {
+        return reportType;
     }
 
     public String getCrawlerRunData() {
@@ -130,6 +135,10 @@ public class FMRReport {
         this.reportID = reportID;
     }
 
+    public void setReportType(String reportType) {
+        this.reportType = reportType;
+    }
+
     public void setFiscalYear(String fiscalYear) {
         this.fiscalYear = fiscalYear;
     }
@@ -156,6 +165,10 @@ public class FMRReport {
 
     public void setMsaCode(String msaCode) {
         this.msaCode = msaCode;
+    }
+
+    public void setSmallAreaFmr(String isSmallAreaFmr) {
+        this.isSmallAreaFmr = isSmallAreaFmr;
     }
 
     public void setAreaType(String areaType) {
@@ -192,10 +205,6 @@ public class FMRReport {
 
     public void setAdjustmentFactor(String adjustmentFactor) {
         this.adjustmentFactor = adjustmentFactor;
-    }
-
-    public void setSmallAreaFmr(String smallAreaFmr) {
-        isSmallAreaFmr = smallAreaFmr;
     }
 
     public void setMedianHouseholdIncome(String medianHouseholdIncome) {

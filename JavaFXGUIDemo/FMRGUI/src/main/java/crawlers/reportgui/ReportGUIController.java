@@ -1,4 +1,4 @@
-package fmrcrawler.fmrgui;
+package crawlers.reportgui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,23 +8,38 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
-public class FMRGUIController {
-    private FMRGUI GUI1 = new FMRGUI();
+public class ReportGUIController {
+    private ReportGUI GUI1 = new ReportGUI();
+
+    @FXML
+    private TextField AddressPHA;
 
     @FXML
     private TextField BedroomAverage;
 
     @FXML
+    private TextField CityPHA;
+
+    @FXML
     private TextField CountyName;
 
     @FXML
+    private TextField CountyNamePHA;
+
+    @FXML
     private TextField CurrentReport;
+
+    @FXML
+    private TextField CurrentReportPHA;
 
     @FXML
     private TextField FMRAverage;
 
     @FXML
     private TextField FMRNumber;
+
+    @FXML
+    private TextField FilterState;
 
     @FXML
     private TextField FiscalYear;
@@ -39,6 +54,9 @@ public class FMRGUIController {
     private TextField ManualEnterReport;
 
     @FXML
+    private TextField ManualEnterReportPHA;
+
+    @FXML
     private TextField MarketType;
 
     @FXML
@@ -51,25 +69,37 @@ public class FMRGUIController {
     private TextField State;
 
     @FXML
+    private TextField StatePHA;
+
+    @FXML
+    private TextField TotalFilteredReports;
+
+    @FXML
     private TextField TotalReports;
 
     @FXML
     private TextField ZipCode;
 
     @FXML
-    private TextField FilterState;
+    private TextField ZipCodePHA;
 
     @FXML
-    private TextField TotalFilteredReports;
+    private TextField TotalReportsFMR;
+
+    @FXML
+    private TextField TotalReportsPHA;
 
 
     @FXML //copy of OpenReport method with a preset file path used for testing
     void TestLoad(ActionEvent event) throws ParserConfigurationException, IOException, SAXException {
-        GUI1.setFilePath("C:\\\\Python\\\\221Project\\\\TestReport.xml");
-
+        GUI1.setFilePath("C:\\Python\\221Project\\SectionM8-Demo-Fall2025\\Crawlers\\TestFMRReport.xml");
         GUI1.openXMLReport();
 
+        GUI1.setFilePath("C:\\Python\\221Project\\SectionM8-Demo-Fall2025\\Crawlers\\TestPHAReport.xml");
+        GUI1.openXMLReportPHA();
+
         updateReportGUI();
+        updateReportGUIPHA();
     }
 
     @FXML //opens the selected report path and update GUI
@@ -81,9 +111,18 @@ public class FMRGUIController {
         updateReportGUI();
     }
 
+    @FXML
+    void OpenReportPHA(ActionEvent event) throws ParserConfigurationException, IOException, SAXException {
+        GUI1.setFilePath(this.ReportPath.getText());
+
+        GUI1.openXMLReportPHA();
+
+        updateReportGUIPHA();
+    }
+
     @FXML //clear the report lists and update GUI
     void ClearReports(ActionEvent event) {
-        GUI1 = new FMRGUI();
+        GUI1 = new ReportGUI();
 
         updateReportGUIClear();
     }
@@ -102,13 +141,37 @@ public class FMRGUIController {
         updateReportGUI();
     }
 
+    @FXML
+    void DecreaseCurrentReportPHA(ActionEvent event) {
+        GUI1.decreaseCurrentReportPHA();
+
+        updateReportGUIPHA();
+    }
+
+    @FXML
+    void IncreaseCurrentReportPHA(ActionEvent event) {
+        GUI1.increaseCurrentReportPHA();
+
+        updateReportGUIPHA();
+    }
+
     @FXML //get the ID that the user manually entered and go to it
     void GetManualReport(ActionEvent event) {
         int tempReportID = Integer.parseInt(this.ManualEnterReport.getText());
 
-        if (tempReportID > 0 && tempReportID < GUI1.getNumOfReports()+1){
+        if (tempReportID > 0 && tempReportID < GUI1.getNumOfFMRReports()+1){
             GUI1.setCurrentReport(tempReportID-1);
             updateReportGUI();
+        }
+    }
+
+    @FXML //get the ID that the user manually entered and go to it
+    void GetManualReportPHA(ActionEvent event) {
+        int tempReportID = Integer.parseInt(this.ManualEnterReportPHA.getText());
+
+        if (tempReportID > 0 && tempReportID < GUI1.getNumOfPHAReports()+1){
+            GUI1.setCurrentReportPHA(tempReportID-1);
+            updateReportGUIPHA();
         }
     }
 
@@ -130,6 +193,7 @@ public class FMRGUIController {
     private void updateReportGUI(){
         CurrentReport.setText(String.format("%d",GUI1.getCurrentReport()+1));
         TotalReports.setText(String.format("%d",GUI1.getNumOfReports()));
+        TotalReportsFMR.setText(String.format("%d",GUI1.getNumOfFMRReports()));
 
         FiscalYear.setText(String.format(GUI1.getCurrentReportFiscalYear()));
         CountyName.setText(String.format(GUI1.getCurrentReportCountyName()));
@@ -156,6 +220,8 @@ public class FMRGUIController {
     //clear all text fields to base values
     private void updateReportGUIClear(){
         TotalReports.setText("0");
+        TotalReportsFMR.setText("0");
+        TotalReportsPHA.setText("0");
         TotalFilteredReports.setText("0");
         CurrentReport.setText("");
         FiscalYear.setText("");
@@ -169,6 +235,25 @@ public class FMRGUIController {
         FMRAverage.setText("");
         IncomeAverage.setText("");
         BedroomAverage.setText("");
+
+        CurrentReportPHA.setText("");
+        StatePHA.setText("");
+        CityPHA.setText("");
+        CountyNamePHA.setText("");
+        ZipCodePHA.setText("");
+        AddressPHA.setText("");
     }
 
+    //update all text fields
+    private void updateReportGUIPHA(){
+        CurrentReportPHA.setText(String.format("%d",GUI1.getCurrentReportPHA()+1));
+        TotalReports.setText(String.format("%d",GUI1.getNumOfReports()));
+        TotalReportsPHA.setText(String.format("%d",GUI1.getNumOfPHAReports()));
+
+        StatePHA.setText(String.format(GUI1.getCurrentPHAReportState()));
+        CityPHA.setText(String.format(GUI1.getCurrentPHAReportCity()));
+        CountyNamePHA.setText(String.format(GUI1.getCurrentPHAReportCounty()));
+        ZipCodePHA.setText(String.format(GUI1.getCurrentPHAReportZipCode()));
+        AddressPHA.setText(String.format(GUI1.getCurrentPHAReportAddress()));
+    }
 }
