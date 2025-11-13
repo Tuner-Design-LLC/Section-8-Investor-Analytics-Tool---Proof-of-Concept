@@ -4,7 +4,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 import java.util.ArrayList;
 
-public class ReportHandler extends DefaultHandler {
+public class ReportHandlerFMR extends DefaultHandler {
 
     private ArrayList<FMRReport> reports = new ArrayList<>();
     private FMRReport currentReport;
@@ -14,7 +14,7 @@ public class ReportHandler extends DefaultHandler {
         return reports;
     }
 
-    @Override
+    @Override//create each report and get its id
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
         if (qName.equalsIgnoreCase("Report")) {
             currentReport = new FMRReport();
@@ -28,7 +28,7 @@ public class ReportHandler extends DefaultHandler {
         content.append(ch, start, length);
     }
 
-    @Override
+    @Override//function for adding data to the report class
     public void endElement(String uri, String localName, String qName) {
 
         if (currentReport != null) {

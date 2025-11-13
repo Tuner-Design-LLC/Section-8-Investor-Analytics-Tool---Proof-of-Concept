@@ -9,6 +9,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 public class ReportGUIController {
+    //BASE GUI USED FOR ALL REPORTS
     private ReportGUI GUI1 = new ReportGUI();
 
     @FXML
@@ -90,28 +91,29 @@ public class ReportGUIController {
     private TextField TotalReportsPHA;
 
 
-    @FXML //copy of OpenReport method with a preset file path used for testing
+    @FXML //A testing load method that loads reports without having to input the file path by hand
+    //NOTE if you want to use this test method just add your own file paths
     void TestLoad(ActionEvent event) throws ParserConfigurationException, IOException, SAXException {
         GUI1.setFilePath("C:\\Python\\221Project\\SectionM8-Demo-Fall2025\\Crawlers\\TestFMRReport.xml");
-        GUI1.openXMLReport();
+        GUI1.openXMLReportFMR();
 
         GUI1.setFilePath("C:\\Python\\221Project\\SectionM8-Demo-Fall2025\\Crawlers\\TestPHAReport.xml");
         GUI1.openXMLReportPHA();
 
-        updateReportGUI();
+        updateReportGUIFMR();
         updateReportGUIPHA();
     }
 
     @FXML //opens the selected report path and update GUI
-    void OpenReport(ActionEvent event) throws ParserConfigurationException, IOException, SAXException {
+    void OpenReportFMR(ActionEvent event) throws ParserConfigurationException, IOException, SAXException {
         GUI1.setFilePath(this.ReportPath.getText());
 
-        GUI1.openXMLReport();
+        GUI1.openXMLReportFMR();
 
-        updateReportGUI();
+        updateReportGUIFMR();
     }
 
-    @FXML
+    @FXML //opens the selected report path and update GUI
     void OpenReportPHA(ActionEvent event) throws ParserConfigurationException, IOException, SAXException {
         GUI1.setFilePath(this.ReportPath.getText());
 
@@ -128,27 +130,27 @@ public class ReportGUIController {
     }
 
     @FXML //decrease the currently selected report by one and update GUI
-    void DecreaseCurrentReport(ActionEvent event) {
-        GUI1.decreaseCurrentReport();
+    void DecreaseCurrentReportFMR(ActionEvent event) {
+        GUI1.decreaseCurrentReportFMR();
 
-        updateReportGUI();
+        updateReportGUIFMR();
     }
 
     @FXML //increase the currently selected report by one and update GUI
-    void IncreaseCurrentReport(ActionEvent event) {
-        GUI1.increaseCurrentReport();
+    void IncreaseCurrentReportFMR(ActionEvent event) {
+        GUI1.increaseCurrentReportFMR();
 
-        updateReportGUI();
+        updateReportGUIFMR();
     }
 
-    @FXML
+    @FXML //decrease the currently selected report by one and update GUI
     void DecreaseCurrentReportPHA(ActionEvent event) {
         GUI1.decreaseCurrentReportPHA();
 
         updateReportGUIPHA();
     }
 
-    @FXML
+    @FXML //increase the currently selected report by one and update GUI
     void IncreaseCurrentReportPHA(ActionEvent event) {
         GUI1.increaseCurrentReportPHA();
 
@@ -156,12 +158,12 @@ public class ReportGUIController {
     }
 
     @FXML //get the ID that the user manually entered and go to it
-    void GetManualReport(ActionEvent event) {
+    void GetManualReportFMR(ActionEvent event) {
         int tempReportID = Integer.parseInt(this.ManualEnterReport.getText());
 
-        if (tempReportID > 0 && tempReportID < GUI1.getNumOfFMRReports()+1){
-            GUI1.setCurrentReport(tempReportID-1);
-            updateReportGUI();
+        if (tempReportID > 0 && tempReportID < GUI1.getNumOfReportsFMR()+1){
+            GUI1.setCurrentReportFMR(tempReportID-1);
+            updateReportGUIFMR();
         }
     }
 
@@ -169,52 +171,65 @@ public class ReportGUIController {
     void GetManualReportPHA(ActionEvent event) {
         int tempReportID = Integer.parseInt(this.ManualEnterReportPHA.getText());
 
-        if (tempReportID > 0 && tempReportID < GUI1.getNumOfPHAReports()+1){
+        if (tempReportID > 0 && tempReportID < GUI1.getNumOfReportsPHA()+1){
             GUI1.setCurrentReportPHA(tempReportID-1);
             updateReportGUIPHA();
         }
     }
 
     @FXML //apply the filters and update the GUI
-    void FilterButton(ActionEvent event) {
-        GUI1.resetFilterReportList();
-        GUI1.filterReportsByState(this.FilterState.getText());
-        TotalFilteredReports.setText(String.format("%d",GUI1.getNumOfFilteredReports()));
-        updateReportGUI();
+    void FilterButtonFMR(ActionEvent event) {
+        GUI1.resetFilterReportListFMR();
+        GUI1.filterReportsByStateFMR(this.FilterState.getText());
+        TotalFilteredReports.setText(String.format("%d",GUI1.getNumOfFilteredReportsFMR()));
+        updateReportGUIFMR();
     }
 
     @FXML//toggle the filter on/off and update GUI
-    void ToggleFilters(ActionEvent event) {
-        GUI1.toggleFilter();
-        updateReportGUI();
+    void ToggleFiltersFMR(ActionEvent event) {
+        GUI1.toggleFilterFMR();
+        updateReportGUIFMR();
     }
 
-    //update all text fields
-    private void updateReportGUI(){
-        CurrentReport.setText(String.format("%d",GUI1.getCurrentReport()+1));
-        TotalReports.setText(String.format("%d",GUI1.getNumOfReports()));
-        TotalReportsFMR.setText(String.format("%d",GUI1.getNumOfFMRReports()));
+    //update all FMR text fields
+    private void updateReportGUIFMR(){
+        CurrentReport.setText(String.format("%d",GUI1.getCurrentReportFMR()+1));
+        TotalReports.setText(String.format("%d",GUI1.getTotalNumOfReports()));
+        TotalReportsFMR.setText(String.format("%d",GUI1.getNumOfReportsFMR()));
 
-        FiscalYear.setText(String.format(GUI1.getCurrentReportFiscalYear()));
-        CountyName.setText(String.format(GUI1.getCurrentReportCountyName()));
-        NumBedrooms.setText(String.format(GUI1.getCurrentReportNumOfBedrooms()));
-        FMRNumber.setText(String.format("$%s",GUI1.getCurrentReportFMRNumber()));
-        HouseholdIncome.setText(String.format("$%s",GUI1.getCurrentReportHouseholdIncome()));
-        MarketType.setText(String.format(GUI1.getCurrentReportMarketType()));
-        ZipCode.setText(String.format(GUI1.getCurrentReportZipCode()));
-        State.setText(String.format(GUI1.getCurrentReportState()));
+        FiscalYear.setText(String.format(GUI1.getCurrentFMRReportFiscalYear()));
+        CountyName.setText(String.format(GUI1.getCurrentFMRReportCountyName()));
+        NumBedrooms.setText(String.format(GUI1.getCurrentFMRReportNumOfBedrooms()));
+        FMRNumber.setText(String.format("$%s",GUI1.getCurrentFMRReportFMRNumber()));
+        HouseholdIncome.setText(String.format("$%s",GUI1.getCurrentFMRReportHouseholdIncome()));
+        MarketType.setText(String.format(GUI1.getCurrentFMRReportMarketType()));
+        ZipCode.setText(String.format(GUI1.getCurrentFMRReportZipCode()));
+        State.setText(String.format(GUI1.getCurrentFMRReportState()));
 
         FMRAverage.setText(String.format("$%.2f",GUI1.getAverageFMRNumber()));
-        IncomeAverage.setText(String.format("$%.2f",GUI1.getAverageIncome()));
-        BedroomAverage.setText(String.format("%.2f",GUI1.getAverageBedrooms()));
+        IncomeAverage.setText(String.format("$%.2f",GUI1.getAverageIncomeFMR()));
+        BedroomAverage.setText(String.format("%.2f",GUI1.getAverageBedroomsFMR()));
 
         //case where user enables filters with no reports in the filters list
         if(Double.isNaN(GUI1.getAverageFMRNumber()))
             FMRAverage.setText("");
-        if(Double.isNaN(GUI1.getAverageIncome()))
+        if(Double.isNaN(GUI1.getAverageIncomeFMR()))
             IncomeAverage.setText("");
-        if(Double.isNaN(GUI1.getAverageBedrooms()))
+        if(Double.isNaN(GUI1.getAverageBedroomsFMR()))
             BedroomAverage.setText("");
+    }
+
+    //update all PHA text fields
+    private void updateReportGUIPHA(){
+        CurrentReportPHA.setText(String.format("%d",GUI1.getCurrentReportPHA()+1));
+        TotalReports.setText(String.format("%d",GUI1.getTotalNumOfReports()));
+        TotalReportsPHA.setText(String.format("%d",GUI1.getNumOfReportsPHA()));
+
+        StatePHA.setText(String.format(GUI1.getCurrentPHAReportState()));
+        CityPHA.setText(String.format(GUI1.getCurrentPHAReportCity()));
+        CountyNamePHA.setText(String.format(GUI1.getCurrentPHAReportCounty()));
+        ZipCodePHA.setText(String.format(GUI1.getCurrentPHAReportZipCode()));
+        AddressPHA.setText(String.format(GUI1.getCurrentPHAReportAddress()));
     }
 
     //clear all text fields to base values
@@ -244,16 +259,4 @@ public class ReportGUIController {
         AddressPHA.setText("");
     }
 
-    //update all text fields
-    private void updateReportGUIPHA(){
-        CurrentReportPHA.setText(String.format("%d",GUI1.getCurrentReportPHA()+1));
-        TotalReports.setText(String.format("%d",GUI1.getNumOfReports()));
-        TotalReportsPHA.setText(String.format("%d",GUI1.getNumOfPHAReports()));
-
-        StatePHA.setText(String.format(GUI1.getCurrentPHAReportState()));
-        CityPHA.setText(String.format(GUI1.getCurrentPHAReportCity()));
-        CountyNamePHA.setText(String.format(GUI1.getCurrentPHAReportCounty()));
-        ZipCodePHA.setText(String.format(GUI1.getCurrentPHAReportZipCode()));
-        AddressPHA.setText(String.format(GUI1.getCurrentPHAReportAddress()));
-    }
 }

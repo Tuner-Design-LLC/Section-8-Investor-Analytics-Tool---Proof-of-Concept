@@ -12,16 +12,16 @@ import org.xml.sax.SAXException;
 
 public class ReportGUI {
     private String filePath;
-    private Boolean filterEnabled;
-    private int currentReport;
+    private Boolean filterEnabledFMR;
+    private int currentReportFMR;
     private int currentReportPHP;
-    private ArrayList<FMRReport> reports = new ArrayList<>();
+    private ArrayList<FMRReport> FMRreports = new ArrayList<>();
     private ArrayList<PHAReport> PHPreports = new ArrayList<>();
-    private ArrayList<FMRReport> reportsFiltered = new ArrayList<>();
+    private ArrayList<FMRReport> FMRReportsFiltered = new ArrayList<>();
 
     public ReportGUI(){
-        filterEnabled = false;
-        currentReport=0;
+        filterEnabledFMR = false;
+        currentReportFMR =0;
         currentReportPHP=0;
     }
 
@@ -31,28 +31,29 @@ public class ReportGUI {
     }
 
     //opens the XML file at the given path and extracts the data into reports
-    public void openXMLReport() throws ParserConfigurationException, SAXException, IOException {
+    public void openXMLReportFMR() throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
 
-        ReportHandler handler = new ReportHandler();
+        ReportHandlerFMR handler = new ReportHandlerFMR();
         parser.parse(new File(filePath), handler);
 
-        //create a temp list of imported reports
+        //create a temp list of imported reports then only add non-dupe ids
         ArrayList<FMRReport> tempReports = new ArrayList<>(handler.getReports());
         for (FMRReport report:tempReports){
             boolean flag = true;
-            for(FMRReport baseReport:reports){
+            for(FMRReport baseReport: FMRreports){
                 if (Integer.parseInt(report.getReportID()) == Integer.parseInt(baseReport.getReportID())) {
                     flag = false;
                     break;
                 }
             }
             if(flag)
-                reports.add(report);
+                FMRreports.add(report);
         }
     }
 
+    //opens the XML file at the given path and extracts the data into reports
     public void openXMLReportPHA() throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
@@ -60,7 +61,7 @@ public class ReportGUI {
         ReportHandlerPHA handler = new ReportHandlerPHA();
         parser.parse(new File(filePath), handler);
 
-        //create a temp list of imported reports
+        //create a temp list of imported reports then only add non-dupe ids
         ArrayList<PHAReport> tempReports = new ArrayList<>(handler.getReports());
         for (PHAReport report:tempReports){
             boolean flag = true;
@@ -76,24 +77,24 @@ public class ReportGUI {
     }
 
     //methods for dealing with the current number of reports and the selected report
-    public int getNumOfReports(){
-        return reports.size()+PHPreports.size();
+    public int getTotalNumOfReports(){
+        return FMRreports.size()+PHPreports.size();
     }
 
-    public int getNumOfFMRReports(){
-        return reports.size();
+    public int getNumOfReportsFMR(){
+        return FMRreports.size();
     }
 
-    public int getNumOfPHAReports(){
+    public int getNumOfReportsPHA(){
         return PHPreports.size();
     }
 
-    public int getCurrentReport(){
-        return currentReport;
+    public int getCurrentReportFMR(){
+        return currentReportFMR;
     }
 
-    public void setCurrentReport(int report){
-        currentReport = report;
+    public void setCurrentReportFMR(int report){
+        currentReportFMR = report;
     }
 
     public int getCurrentReportPHA(){
@@ -105,22 +106,22 @@ public class ReportGUI {
     }
 
     //increase current report
-    public void increaseCurrentReport(){
-        if (currentReport+1 < getNumOfFMRReports()){
-            currentReport++;
+    public void increaseCurrentReportFMR(){
+        if (currentReportFMR +1 < getNumOfReportsFMR()){
+            currentReportFMR++;
         }
     }
 
     //decrease current report
-    public void decreaseCurrentReport(){
-        if (currentReport > 0){
-            currentReport--;
+    public void decreaseCurrentReportFMR(){
+        if (currentReportFMR > 0){
+            currentReportFMR--;
         }
     }
 
     //increase current report PHP
     public void increaseCurrentReportPHA(){
-        if (currentReportPHP+1 < getNumOfPHAReports()){
+        if (currentReportPHP+1 < getNumOfReportsPHA()){
             currentReportPHP++;
         }
     }
@@ -135,107 +136,107 @@ public class ReportGUI {
     //average methods include two cases depending on if the filter is enabled or not
     public double getAverageFMRNumber(){
         double temp=0;
-        if(filterEnabled){
-            for(FMRReport report: reportsFiltered){
+        if(filterEnabledFMR){
+            for(FMRReport report: FMRReportsFiltered){
                 temp+= Double.parseDouble(report.getFairMarketRent());
             }
-            return (temp/reportsFiltered.size());
+            return (temp/ FMRReportsFiltered.size());
         }
         else{
-            for(FMRReport report: reports){
+            for(FMRReport report: FMRreports){
                 temp+= Double.parseDouble(report.getFairMarketRent());
             }
-            return (temp/reports.size());
+            return (temp/ FMRreports.size());
         }
     }
 
-    public double getAverageIncome(){
+    public double getAverageIncomeFMR(){
         double temp=0;
-        if(filterEnabled){
-            for(FMRReport report: reportsFiltered){
+        if(filterEnabledFMR){
+            for(FMRReport report: FMRReportsFiltered){
                 temp+= Double.parseDouble(report.getMedianHouseholdIncome());
             }
-            return (temp/reportsFiltered.size());
+            return (temp/ FMRReportsFiltered.size());
         }
         else{
-            for(FMRReport report: reports){
+            for(FMRReport report: FMRreports){
                 temp+= Double.parseDouble(report.getMedianHouseholdIncome());
             }
-            return (temp/reports.size());
+            return (temp/ FMRreports.size());
         }
     }
 
-    public double getAverageBedrooms(){
+    public double getAverageBedroomsFMR(){
         double temp=0;
-        if(filterEnabled){
-            for(FMRReport report: reportsFiltered){
+        if(filterEnabledFMR){
+            for(FMRReport report: FMRReportsFiltered){
                 temp+= Double.parseDouble(report.getNumBedrooms());
             }
-            return (temp/reportsFiltered.size());
+            return (temp/ FMRReportsFiltered.size());
         }
         else{
-            for(FMRReport report: reports){
+            for(FMRReport report: FMRreports){
                 temp+= Double.parseDouble(report.getNumBedrooms());
             }
-            return (temp/reports.size());
+            return (temp/ FMRreports.size());
         }
     }
 
-    //create a filtered list of reports by state
-    public void filterReportsByState(String stateKey){
-        for(FMRReport report: reports){
+    //create a filtered list of reports by state FMR
+    public void filterReportsByStateFMR(String stateKey){
+        for(FMRReport report: FMRreports){
             if(Objects.equals(report.getStateName(), stateKey)){
-                reportsFiltered.add(report);
+                FMRReportsFiltered.add(report);
             }
         }
     }
 
-    //remove all filtered data
-    public void resetFilterReportList(){
-        reportsFiltered = new ArrayList<>();
+    //remove all filtered data FMR
+    public void resetFilterReportListFMR(){
+        FMRReportsFiltered = new ArrayList<>();
     }
 
-    //get all num of filtered reports
-    public int getNumOfFilteredReports(){
-        return reportsFiltered.size();
+    //get all num of filtered reports FMR
+    public int getNumOfFilteredReportsFMR(){
+        return FMRReportsFiltered.size();
     }
 
-    //toggle the filter on or off
-    public void toggleFilter(){
-        filterEnabled = !filterEnabled;
+    //toggle the filter on / off FMR
+    public void toggleFilterFMR(){
+        filterEnabledFMR = !filterEnabledFMR;
     }
 
-    //standard get methods for the GUI
-    public String getCurrentReportFiscalYear(){
-        return reports.get(currentReport).getFiscalYear();
+    //get methods for FMR reports
+    public String getCurrentFMRReportFiscalYear(){
+        return FMRreports.get(currentReportFMR).getFiscalYear();
     }
 
-    public String getCurrentReportCountyName(){
-        return reports.get(currentReport).getCountyName();
+    public String getCurrentFMRReportCountyName(){
+        return FMRreports.get(currentReportFMR).getCountyName();
     }
 
-    public String getCurrentReportNumOfBedrooms(){
-        return reports.get(currentReport).getNumBedrooms();
+    public String getCurrentFMRReportNumOfBedrooms(){
+        return FMRreports.get(currentReportFMR).getNumBedrooms();
     }
 
-    public String getCurrentReportFMRNumber(){
-        return reports.get(currentReport).getFairMarketRent();
+    public String getCurrentFMRReportFMRNumber(){
+        return FMRreports.get(currentReportFMR).getFairMarketRent();
     }
 
-    public String getCurrentReportState(){
-        return reports.get(currentReport).getStateName();
+    public String getCurrentFMRReportState(){
+        return FMRreports.get(currentReportFMR).getStateName();
     }
 
-    public String getCurrentReportZipCode(){
-        return reports.get(currentReport).getZipCode();
+    public String getCurrentFMRReportZipCode(){
+        return FMRreports.get(currentReportFMR).getZipCode();
     }
 
-    public String getCurrentReportMarketType(){
-        return reports.get(currentReport).getAreaType();
+    public String getCurrentFMRReportMarketType(){
+        return FMRreports.get(currentReportFMR).getAreaType();
     }
 
-    public String getCurrentReportHouseholdIncome(){
-        return reports.get(currentReport).getMedianHouseholdIncome();
+    public String getCurrentFMRReportHouseholdIncome(){
+        return FMRreports.get(currentReportFMR).getMedianHouseholdIncome();
     }
 
     //get methods for PHP reports

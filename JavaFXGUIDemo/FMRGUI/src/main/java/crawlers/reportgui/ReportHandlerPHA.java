@@ -15,7 +15,7 @@ public class ReportHandlerPHA extends DefaultHandler {
         return reports;
     }
 
-    @Override
+    @Override//create each report and get its id
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
         if (qName.equalsIgnoreCase("PHA")) {
             currentReport = new PHAReport();
@@ -29,7 +29,7 @@ public class ReportHandlerPHA extends DefaultHandler {
         content.append(ch, start, length);
     }
 
-    @Override
+    @Override//function for adding data to the report class
     public void endElement(String uri, String localName, String qName) {
 
         if (currentReport != null) {

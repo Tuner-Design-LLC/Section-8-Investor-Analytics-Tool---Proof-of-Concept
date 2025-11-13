@@ -101,7 +101,7 @@
                               </GridPane>
                            </children>
                         </VBox>
-                        <VBox layoutX="396.0" layoutY="56.0" prefHeight="315.0" prefWidth="381.0">
+                        <VBox layoutX="396.0" layoutY="56.0" prefHeight="315.0" prefWidth="384.0">
                            <children>
                               <Label alignment="CENTER" prefHeight="45.0" prefWidth="417.0" text="Report Set Data">
                                  <font>
@@ -171,16 +171,16 @@
                               </GridPane>
                            </children>
                         </VBox>
-                        <Button layoutX="954.0" layoutY="31.0" mnemonicParsing="false" onAction="#FilterButton" text="Filter" />
-                        <CheckBox contentDisplay="CENTER" layoutX="845.0" layoutY="35.0" mnemonicParsing="false" onAction="#ToggleFilters" prefHeight="17.0" prefWidth="88.0" text="Use Filters" />
+                        <Button layoutX="954.0" layoutY="31.0" mnemonicParsing="false" onAction="#FilterButtonFMR" text="Filter" />
+                        <CheckBox contentDisplay="CENTER" layoutX="845.0" layoutY="35.0" mnemonicParsing="false" onAction="#ToggleFiltersFMR" prefHeight="17.0" prefWidth="88.0" text="Use Filters" />
                         <Label layoutX="251.0" layoutY="9.0" text="Current Report" />
                         <TextField fx:id="CurrentReport" alignment="CENTER" editable="false" layoutX="243.0" layoutY="31.0" prefHeight="25.0" prefWidth="94.0" />
-                        <Button layoutX="347.0" layoutY="31.0" mnemonicParsing="false" onAction="#IncreaseCurrentReport" text="Increase" />
-                        <Button layoutX="169.0" layoutY="31.0" mnemonicParsing="false" onAction="#DecreaseCurrentReport" text="Decrease" />
+                        <Button layoutX="347.0" layoutY="31.0" mnemonicParsing="false" onAction="#IncreaseCurrentReportFMR" text="Increase" />
+                        <Button layoutX="169.0" layoutY="31.0" mnemonicParsing="false" onAction="#DecreaseCurrentReportFMR" text="Decrease" />
                         <Label layoutX="467.0" layoutY="9.0" prefHeight="17.0" prefWidth="136.0" text="Manual Report Selection" />
                         <TextField fx:id="ManualEnterReport" alignment="CENTER" layoutX="440.0" layoutY="31.0" prefHeight="25.0" prefWidth="94.0" promptText="Enter ID" />
-                        <Button layoutX="543.0" layoutY="31.0" mnemonicParsing="false" onAction="#GetManualReport" text="Go To Report" />
-                        <Button layoutX="1116.0" layoutY="60.0" mnemonicParsing="false" onAction="#OpenReport" text="Open Reports" />
+                        <Button layoutX="543.0" layoutY="31.0" mnemonicParsing="false" onAction="#GetManualReportFMR" text="Go To Report" />
+                        <Button layoutX="1116.0" layoutY="60.0" mnemonicParsing="false" onAction="#OpenReportFMR" text="Open Reports" />
                         <Label alignment="CENTER_RIGHT" layoutX="1033.0" layoutY="35.0" prefHeight="17.0" prefWidth="129.0" text="FMR Reports Loaded:" />
                         <TextField fx:id="TotalReportsFMR" editable="false" layoutX="1162.0" layoutY="31.0" prefHeight="25.0" prefWidth="90.0" text="0" />
                      </children>
