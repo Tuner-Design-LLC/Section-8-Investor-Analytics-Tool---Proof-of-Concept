@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="1270.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="crawlers.reportgui.ReportGUIController">
    <children>
@@ -348,6 +349,11 @@
                         <Button layoutX="1116.0" layoutY="60.0" mnemonicParsing="false" text="Open Reports" />
                         <Label alignment="CENTER_RIGHT" layoutX="1033.0" layoutY="35.0" prefHeight="17.0" prefWidth="129.0" text="HUD Reports Loaded:" />
                         <TextField editable="false" layoutX="1162.0" layoutY="31.0" prefHeight="25.0" prefWidth="90.0" text="0" />
+                        <Text layoutX="484.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NOTE: This is a static placeholder/copy of FMR Reports tab. Functionality &amp; integration of all 3 report tabs into 1 TBD for Final Project Part II" wrappingWidth="466.380859375">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Text>
                      </children>
                   </AnchorPane>
             </content>
