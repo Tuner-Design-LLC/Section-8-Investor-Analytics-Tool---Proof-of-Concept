@@ -94,10 +94,11 @@ public class ReportGUIController {
     @FXML //A testing load method that loads reports without having to input the file path by hand
     //NOTE if you want to use this test method just add your own file paths
     void TestLoad(ActionEvent event) throws ParserConfigurationException, IOException, SAXException {
-        GUI1.setFilePath("C:\\Python\\221Project\\SectionM8-Demo-Fall2025\\Crawlers\\TestFMRReport.xml");
+        // Use project-level 'Test Reports' directory relative to working directory
+        GUI1.setFilePath(System.getProperty("user.dir") + "\\Test Reports\\TestFMRReport.xml");
         GUI1.openXMLReportFMR();
 
-        GUI1.setFilePath("C:\\Python\\221Project\\SectionM8-Demo-Fall2025\\Crawlers\\TestPHAReport.xml");
+        GUI1.setFilePath(System.getProperty("user.dir") + "\\Test Reports\\TestPHAReport.xml");
         GUI1.openXMLReportPHA();
 
         updateReportGUIFMR();

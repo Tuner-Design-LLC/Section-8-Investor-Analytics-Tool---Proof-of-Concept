@@ -98,12 +98,16 @@ def run_test():
 
     normalized = crawler.normalize()
 
-    # Create a simple CSV for inspection (optional)
-    out_csv = os.path.join(os.path.dirname(__file__), "TestHUDReport.csv")
+    # Create a simple CSV for inspection (optional) and a Test XML in repo 'Test Reports'
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+    reports_dir = os.path.join(repo_root, "Test Reports")
+    os.makedirs(reports_dir, exist_ok=True)
+
+    out_csv = os.path.join(reports_dir, "TestHUDReport.csv")
     normalized.to_csv(out_csv, index=False)
 
     # Create XML report using the HUDCrawler helper
-    out_xml = os.path.join(os.path.dirname(__file__), "TestHUDReport.xml")
+    out_xml = os.path.join(reports_dir, "TestHUDReport.xml")
     crawler.create_xml_report(out_xml, normalized)
 
     # Validate/error handling that the written XML can be parsed

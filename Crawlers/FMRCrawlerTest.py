@@ -55,10 +55,10 @@ class FMRCrawler:
         # create a tree from the root which is used to create the XML file
         tree = ET.ElementTree(root)
 
-        # Determine output path: default to "TestFMRReport.xml" in the same folder as this script
+        # Determine output path: default to repository-root/Test Reports/TestFMRReport.xml
         if output_path is None:
-            script_dir = Path(__file__).resolve().parent
-            output_path = script_dir / "TestFMRReport.xml"
+            repo_root = Path(__file__).resolve().parents[1]
+            output_path = repo_root / "Test Reports" / "TestFMRReport.xml"
         else:
             output_path = Path(output_path)
 
