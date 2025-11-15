@@ -1,6 +1,6 @@
 # NOTE - This module provides utility functions to export data payloads into JSON and XML formats.
 # NOTE - Further enhancements and documentation will be added in future iterations.
-# NOTE - This module will work in conjunction with the TBD prototype PHA and FMR crawlers.
+# NOTE - Expansion of this module incoming to provide abstraction of more shared functions between the crawlers
 
 import json
 import xml.etree.ElementTree as ET
