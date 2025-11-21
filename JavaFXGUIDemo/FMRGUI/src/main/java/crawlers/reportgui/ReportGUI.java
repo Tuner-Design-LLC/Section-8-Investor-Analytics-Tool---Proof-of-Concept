@@ -13,16 +13,46 @@ import org.xml.sax.SAXException;
 public class ReportGUI {
     private String filePath;
     private Boolean filterEnabledFMR;
+    private Boolean filterEnabledPHA;
+
     private int currentReportFMR;
     private int currentReportPHA;
     private ArrayList<FMRReport> FMRreports = new ArrayList<>();
     private ArrayList<PHAReport> PHAreports = new ArrayList<>();
     private ArrayList<FMRReport> FMRReportsFiltered = new ArrayList<>();
+    private ArrayList<PHAReport> PHAReportsFiltered = new ArrayList<>();
+     
 
     public ReportGUI(){
         filterEnabledFMR = false;
+        filterEnabledPHA = false;
+       
         currentReportFMR =0;
         currentReportPHA=0;
+    }
+
+    //create a filtered list of reports by state PHA
+    public void filterReportsByStatePHA(String stateKey){
+        for(PHAReport report: PHAreports){
+            if(Objects.equals(report.getStateName(), stateKey)){
+                PHAReportsFiltered.add(report);
+            }
+        }
+    }
+
+    //remove all filtered data PHA
+    public void resetFilterReportListPHA(){
+        PHAReportsFiltered = new ArrayList<>();
+    }
+
+    //get all num of filtered reports PHA
+    public int getNumOfFilteredReportsPHA(){
+        return PHAReportsFiltered.size();
+    }
+
+    //toggle the filter on / off PHA
+    public void toggleFilterPHA(){
+        filterEnabledPHA = !filterEnabledPHA;
     }
 
     //sets the file path to load from
@@ -246,7 +276,9 @@ public class ReportGUI {
         return FMRreports.get(currentReportFMR).getMedianHouseholdIncome();
     }
 
-    //get methods for PHP reports
+    //get methods for PHA reports
+  
+
     public String getCurrentPHAReportState(){
         return PHAreports.get(currentReportPHA).getStateName();
     }

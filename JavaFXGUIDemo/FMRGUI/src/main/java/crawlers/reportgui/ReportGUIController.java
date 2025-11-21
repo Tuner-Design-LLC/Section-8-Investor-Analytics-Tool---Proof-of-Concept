@@ -52,6 +52,9 @@ public class ReportGUIController {
     private TextField FilterState;
 
     @FXML
+    private TextField FilterStatePHA;
+
+    @FXML
     private TextField FiscalYear;
 
     @FXML
@@ -94,6 +97,9 @@ public class ReportGUIController {
     private TextField TotalFilteredReports;
 
     @FXML
+    private TextField TotalFilteredReportsPHA;
+
+    @FXML
     private TextField TotalReports;
 
     @FXML
@@ -119,8 +125,13 @@ public class ReportGUIController {
         GUI1.setFilePath(System.getProperty("user.dir") + "\\Test Reports\\TestPHAReport.xml");
         GUI1.openXMLReportPHA();
 
+       // GUI1.setFilePath(System.getProperty("user.dir") + "\\Test Reports\\TestHUDReport.xml");
+       // GUI1.openXMLReportPHA();
+
+
         updateReportGUIFMR();
         updateReportGUIPHA();
+       // updateReportGUIHUD();
     }
 
     @FXML //opens the selected report path and update GUI
@@ -204,10 +215,24 @@ public class ReportGUIController {
         updateReportGUIFMR();
     }
 
+    @FXML //apply the PHA filters and update the GUI
+    void FilterButtonPHA(ActionEvent event) {
+        GUI1.resetFilterReportListPHA();
+        GUI1.filterReportsByStatePHA(this.FilterStatePHA.getText());
+        TotalFilteredReportsPHA.setText(String.format("%d", GUI1.getNumOfFilteredReportsPHA()));
+        updateReportGUIPHA();
+    }
+
     @FXML//toggle the filter on/off and update GUI
     void ToggleFiltersFMR(ActionEvent event) {
         GUI1.toggleFilterFMR();
         updateReportGUIFMR();
+    }
+
+    @FXML//toggle the PHA filter on/off and update GUI
+    void ToggleFiltersPHA(ActionEvent event) {
+        GUI1.toggleFilterPHA();
+        updateReportGUIPHA();
     }
 
     //update all FMR text fields
