@@ -201,21 +201,109 @@ public class ReportGUIController {
     }
 
     @FXML //opens the selected report path and update GUI
-    void OpenReportFMR(ActionEvent event) throws ParserConfigurationException, IOException, SAXException {
-        GUI1.setFilePath(this.ReportPath.getText());
+    void OpenReportFMR(ActionEvent event) {
+        String path = (this.ReportPath == null) ? null : this.ReportPath.getText();
+        if (path == null || path.trim().isEmpty()) {
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setTitle("Open Report");
+            a.setHeaderText("No file selected");
+            a.setContentText("Please select a report file before opening.");
+            a.showAndWait();
+            return;
+        }
 
-        GUI1.openXMLReportFMR();
+        File f = new File(path);
+        if (!f.exists() || !f.isFile()) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Open Report");
+            a.setHeaderText("File not found");
+            a.setContentText("The selected file does not exist: " + path);
+            a.showAndWait();
+            return;
+        }
 
-        updateReportGUIFMR();
+        GUI1.setFilePath(path);
+        try {
+            GUI1.openXMLReportFMR();
+            updateReportGUIFMR();
+        } catch (IndexOutOfBoundsException ex) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Open Report");
+            a.setHeaderText("Wrong report type");
+            a.setContentText("The selected file is not an FMR report. Please select the correct report type.");
+            a.showAndWait();
+        } catch (org.xml.sax.SAXException | javax.xml.parsers.ParserConfigurationException ex) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Open Report");
+            a.setHeaderText("Invalid XML or wrong report type");
+            a.setContentText("The selected file could not be parsed as an FMR report. Please select a valid FMR XML file.");
+            a.showAndWait();
+        } catch (IOException ex) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Open Report");
+            a.setHeaderText("I/O error");
+            a.setContentText(ex.getMessage());
+            a.showAndWait();
+        } catch (Exception ex) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Open Report");
+            a.setHeaderText("Error opening report");
+            a.setContentText(ex.getMessage());
+            a.showAndWait();
+        }
     }
 
     @FXML //opens the selected report path and update GUI
-    void OpenReportPHA(ActionEvent event) throws ParserConfigurationException, IOException, SAXException {
-        GUI1.setFilePath(this.ReportPath.getText());
+    void OpenReportPHA(ActionEvent event) {
+        String path = (this.ReportPath == null) ? null : this.ReportPath.getText();
+        if (path == null || path.trim().isEmpty()) {
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setTitle("Open Report");
+            a.setHeaderText("No file selected");
+            a.setContentText("Please select a report file before opening.");
+            a.showAndWait();
+            return;
+        }
 
-        GUI1.openXMLReportPHA();
+        File f = new File(path);
+        if (!f.exists() || !f.isFile()) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Open Report");
+            a.setHeaderText("File not found");
+            a.setContentText("The selected file does not exist: " + path);
+            a.showAndWait();
+            return;
+        }
 
-        updateReportGUIPHA();
+        GUI1.setFilePath(path);
+        try {
+            GUI1.openXMLReportPHA();
+            updateReportGUIPHA();
+        } catch (IndexOutOfBoundsException ex) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Open Report");
+            a.setHeaderText("Wrong report type");
+            a.setContentText("The selected file is not a PHA report. Please select the correct report type.");
+            a.showAndWait();
+        } catch (org.xml.sax.SAXException | javax.xml.parsers.ParserConfigurationException ex) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Open Report");
+            a.setHeaderText("Invalid XML or wrong report type");
+            a.setContentText("The selected file could not be parsed as a PHA report. Please select a valid PHA XML file.");
+            a.showAndWait();
+        } catch (IOException ex) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Open Report");
+            a.setHeaderText("I/O error");
+            a.setContentText(ex.getMessage());
+            a.showAndWait();
+        } catch (Exception ex) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Open Report");
+            a.setHeaderText("Error opening report");
+            a.setContentText(ex.getMessage());
+            a.showAndWait();
+        }
     }
 
     @FXML //clear the report lists and update GUI
