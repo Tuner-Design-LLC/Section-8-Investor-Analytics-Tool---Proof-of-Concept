@@ -3,6 +3,9 @@ package crawlers.reportgui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
+
+import java.io.File;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -86,6 +89,24 @@ public class ReportGUIController {
 
     @FXML
     private TextField ReportPath;
+
+
+    @FXML
+    void BrowseReport(ActionEvent event) {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Select Report File");
+        chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("XML Files", "*.xml"),
+                new FileChooser.ExtensionFilter("All Files", "*.*")
+        );
+
+        File selected = chooser.showOpenDialog(ReportPath.getScene().getWindow());
+        if (selected != null) {
+            String path = selected.getAbsolutePath();
+            // populate the existing ReportPath field (top browse field)
+            ReportPath.setText(path);
+        }
+    }
 
     @FXML
     private TextField State;
