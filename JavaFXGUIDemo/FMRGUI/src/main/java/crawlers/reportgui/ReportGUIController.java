@@ -144,11 +144,7 @@ public class ReportGUIController {
             } else if ("PHA Reports".equals(tabText)) {
                 OpenReportPHA(event);
             } else if ("HUD Reports".equals(tabText)) {
-                Alert a = new Alert(Alert.AlertType.INFORMATION);
-                a.setTitle("Open Reports");
-                a.setHeaderText("Not implemented");
-                a.setContentText("Opening HUD reports is not implemented in this build.");
-                a.showAndWait();
+                OpenReportHUD(event);
             } else {
                 Alert a = new Alert(Alert.AlertType.INFORMATION);
                 a.setTitle("Open Reports");
@@ -159,6 +155,59 @@ public class ReportGUIController {
         } catch (Exception ex) {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setTitle("Open Reports");
+            a.setHeaderText("Error opening report");
+            a.setContentText(ex.getMessage());
+            a.showAndWait();
+        }
+    }
+
+    @FXML //opens the selected HUD report path and update GUI
+    void OpenReportHUD(ActionEvent event) {
+        String path = (this.ReportPath == null) ? null : this.ReportPath.getText();
+        if (path == null || path.trim().isEmpty()) {
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setTitle("Open Report");
+            a.setHeaderText("No file selected");
+            a.setContentText("Please select a report file before opening.");
+            a.showAndWait();
+            return;
+        }
+
+        File f = new File(path);
+        if (!f.exists() || !f.isFile()) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Open Report");
+            a.setHeaderText("File not found");
+            a.setContentText("The selected file does not exist: " + path);
+            a.showAndWait();
+            return;
+        }
+
+        GUI1.setFilePath(path);
+        try {
+            GUI1.openXMLReportHUD();
+            updateReportGUIHUD();
+        } catch (IndexOutOfBoundsException ex) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Open Report");
+            a.setHeaderText("Wrong report type");
+            a.setContentText("The selected file is not a HUD report. Please select the correct report type.");
+            a.showAndWait();
+        } catch (org.xml.sax.SAXException | javax.xml.parsers.ParserConfigurationException ex) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Open Report");
+            a.setHeaderText("Invalid XML or wrong report type");
+            a.setContentText("The selected file could not be parsed as a HUD report. Please select a valid HUD XML file.");
+            a.showAndWait();
+        } catch (IOException ex) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Open Report");
+            a.setHeaderText("I/O error");
+            a.setContentText(ex.getMessage());
+            a.showAndWait();
+        } catch (Exception ex) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Open Report");
             a.setHeaderText("Error opening report");
             a.setContentText(ex.getMessage());
             a.showAndWait();
@@ -191,6 +240,39 @@ public class ReportGUIController {
 
     @FXML
     private TextField ZipCodePHA;
+
+    @FXML
+    private TextField CurrentReportHUD;
+
+    @FXML
+    private TextField TotalReportsHUD;
+
+    @FXML
+    private TextField propertyAddressHUD;
+
+    @FXML
+    private TextField stateHUD;
+
+    @FXML
+    private TextField countyHUD;
+
+    @FXML
+    private TextField zipcodeHUD;
+
+    @FXML
+    private TextField propertyIDHUD;
+
+    @FXML
+    private TextField fiscalYearHUD;
+
+    @FXML
+    private TextField AMIByCountyHUD;
+
+    @FXML
+    private TextField ownerHUD;
+
+    @FXML
+    private TextField availableUnitsHUD;
 
     @FXML
     private Button stateSelectionButtonHUD;
@@ -295,13 +377,13 @@ public class ReportGUIController {
         GUI1.setFilePath(System.getProperty("user.dir") + "\\Test Reports\\TestPHAReport.xml");
         GUI1.openXMLReportPHA();
 
-       // GUI1.setFilePath(System.getProperty("user.dir") + "\\Test Reports\\TestHUDReport.xml");
-       // GUI1.openXMLReportPHA();
+        GUI1.setFilePath(System.getProperty("user.dir") + "\\Test Reports\\TestHUDReport.xml");
+        GUI1.openXMLReportHUD();
 
 
         updateReportGUIFMR();
         updateReportGUIPHA();
-       // updateReportGUIHUD();
+        updateReportGUIHUD();
     }
 
     @FXML //opens the selected report path and update GUI
@@ -445,6 +527,20 @@ public class ReportGUIController {
         updateReportGUIPHA();
     }
 
+    @FXML //decrease the currently selected HUD report by one and update GUI
+    void DecreaseCurrentReportHUD(ActionEvent event) {
+        GUI1.decreaseCurrentReportHUD();
+
+        updateReportGUIHUD();
+    }
+
+    @FXML //increase the currently selected HUD report by one and update GUI
+    void IncreaseCurrentReportHUD(ActionEvent event) {
+        GUI1.increaseCurrentReportHUD();
+
+        updateReportGUIHUD();
+    }
+
     @FXML //get the ID that the user manually entered and go to it
     void GetManualReportFMR(ActionEvent event) {
         int tempReportID = Integer.parseInt(this.ManualEnterReport.getText());
@@ -549,6 +645,50 @@ public class ReportGUIController {
 
     }
 
+    //update HUD text fields (basic currently: current/total counts)
+    private void updateReportGUIHUD(){
+        if (GUI1.getNumOfReportsHUD() == 0) {
+            if (CurrentReportHUD != null) CurrentReportHUD.setText("");
+            if (TotalReportsHUD != null) TotalReportsHUD.setText("0");
+            if (propertyAddressHUD != null) propertyAddressHUD.setText("");
+            if (stateHUD != null) stateHUD.setText("");
+            if (countyHUD != null) countyHUD.setText("");
+            if (zipcodeHUD != null) zipcodeHUD.setText("");
+            if (propertyIDHUD != null) propertyIDHUD.setText("");
+            if (fiscalYearHUD != null) fiscalYearHUD.setText("");
+            if (AMIByCountyHUD != null) AMIByCountyHUD.setText("");
+            if (ownerHUD != null) ownerHUD.setText("");
+            if (availableUnitsHUD != null) availableUnitsHUD.setText("");
+            return;
+        }
+
+        if (CurrentReportHUD != null)
+            CurrentReportHUD.setText(String.format("%d", GUI1.getCurrentReportHUD()+1));
+        if (TotalReports != null)
+            TotalReports.setText(String.format("%d", GUI1.getTotalNumOfReports()));
+        if (TotalReportsHUD != null)
+            TotalReportsHUD.setText(String.format("%d", GUI1.getNumOfReportsHUD()));
+
+        if (propertyAddressHUD != null)
+            propertyAddressHUD.setText(String.format(GUI1.getCurrentHUDReportPropertyAddress()));
+        if (stateHUD != null)
+            stateHUD.setText(String.format(GUI1.getCurrentHUDReportState()));
+        if (countyHUD != null)
+            countyHUD.setText(String.format(GUI1.getCurrentHUDReportCounty()));
+        if (zipcodeHUD != null)
+            zipcodeHUD.setText(String.format(GUI1.getCurrentHUDReportZipCode()));
+        if (propertyIDHUD != null)
+            propertyIDHUD.setText(String.format(GUI1.getCurrentHUDReportPropertyID()));
+        if (fiscalYearHUD != null)
+            fiscalYearHUD.setText(String.format(GUI1.getCurrentHUDReportFiscalYear()));
+        if (AMIByCountyHUD != null)
+            AMIByCountyHUD.setText(String.format(GUI1.getCurrentHUDReportAMIByCounty()));
+        if (ownerHUD != null)
+            ownerHUD.setText(String.format(GUI1.getCurrentHUDReportOwner()));
+        if (availableUnitsHUD != null)
+            availableUnitsHUD.setText(String.format(GUI1.getCurrentHUDAvailableUnits()));
+    }
+
     //clear all text fields to base values
     private void updateReportGUIClear(){
         TotalReports.setText("0");
@@ -580,6 +720,19 @@ public class ReportGUIController {
         PhonePHA.setText("");
         FaxPHA.setText("");
         EmailPHA.setText("");
+
+        // Clear HUD fields
+        if (CurrentReportHUD != null) CurrentReportHUD.setText("");
+        if (TotalReportsHUD != null) TotalReportsHUD.setText("0");
+        if (propertyAddressHUD != null) propertyAddressHUD.setText("");
+        if (stateHUD != null) stateHUD.setText("");
+        if (countyHUD != null) countyHUD.setText("");
+        if (zipcodeHUD != null) zipcodeHUD.setText("");
+        if (propertyIDHUD != null) propertyIDHUD.setText("");
+        if (fiscalYearHUD != null) fiscalYearHUD.setText("");
+        if (AMIByCountyHUD != null) AMIByCountyHUD.setText("");
+        if (ownerHUD != null) ownerHUD.setText("");
+        if (availableUnitsHUD != null) availableUnitsHUD.setText("");
 
     }
 

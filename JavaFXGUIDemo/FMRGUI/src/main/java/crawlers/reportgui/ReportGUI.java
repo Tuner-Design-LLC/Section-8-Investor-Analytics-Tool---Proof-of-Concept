@@ -21,6 +21,7 @@ public class ReportGUI {
     private ArrayList<PHAReport> PHAreports = new ArrayList<>();
     private ArrayList<FMRReport> FMRReportsFiltered = new ArrayList<>();
     private ArrayList<PHAReport> PHAReportsFiltered = new ArrayList<>();
+    private ArrayList<HUDReport> HUDreports = new ArrayList<>();
      
 
     public ReportGUI(){
@@ -29,6 +30,34 @@ public class ReportGUI {
        
         currentReportFMR =0;
         currentReportPHA=0;
+        currentReportHUD = 0;
+    }
+
+    //HUD report tracking
+    private int currentReportHUD;
+
+    public int getNumOfReportsHUD(){
+        return HUDreports.size();
+    }
+
+    public int getCurrentReportHUD(){
+        return currentReportHUD;
+    }
+
+    public void setCurrentReportHUD(int report){
+        currentReportHUD = report;
+    }
+
+    public void increaseCurrentReportHUD(){
+        if (currentReportHUD +1 < getNumOfReportsHUD()){
+            currentReportHUD++;
+        }
+    }
+
+    public void decreaseCurrentReportHUD(){
+        if (currentReportHUD > 0){
+            currentReportHUD--;
+        }
     }
 
     //create a filtered list of reports by state PHA
@@ -103,6 +132,29 @@ public class ReportGUI {
             }
             if(flag)
                 PHAreports.add(report);
+        }
+    }
+
+    //opens the XML file at the given path and extracts HUD data into reports
+    public void openXMLReportHUD() throws ParserConfigurationException, SAXException, IOException {
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        SAXParser parser = factory.newSAXParser();
+
+        ReportHandlerHUD handler = new ReportHandlerHUD();
+        parser.parse(new File(filePath), handler);
+
+        ArrayList<HUDReport> tempReports = new ArrayList<>(handler.getReports());
+        for (HUDReport report: tempReports) {
+            boolean flag = true;
+            for (HUDReport baseReport: HUDreports) {
+                if (report.getReportID() != null && baseReport.getReportID() != null &&
+                        Integer.parseInt(report.getReportID()) == Integer.parseInt(baseReport.getReportID())) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag)
+                HUDreports.add(report);
         }
     }
 
@@ -321,6 +373,58 @@ public class ReportGUI {
 
     public String getCurrentPHAReportEmail() {
         return PHAreports.get(currentReportPHA).getEmail();
+    }
+
+    //get methods for HUD reports (basic selection getters)
+    public String getCurrentHUDReportPropertyAddress(){
+        return HUDreports.get(currentReportHUD).getPropertyAddress();
+    }
+
+    public String getCurrentHUDReportState(){
+        return HUDreports.get(currentReportHUD).getStateName();
+    }
+
+    public String getCurrentHUDReportCounty(){
+        return HUDreports.get(currentReportHUD).getCountyName();
+    }
+
+    public String getCurrentHUDReportZipCode(){
+        return HUDreports.get(currentReportHUD).getZipCode();
+    }
+
+    public String getCurrentHUDReportPropertyID(){
+        return HUDreports.get(currentReportHUD).getPropertyId();
+    }
+
+    public String getCurrentHUDReportFiscalYear(){
+        return HUDreports.get(currentReportHUD).getFiscalYear();
+    }
+
+    public String getCurrentHUDReportAMIByCounty(){
+        return HUDreports.get(currentReportHUD).getAmiMedianFamilyIncome();
+    }
+
+    public String getCurrentHUDReportOwner(){
+        return HUDreports.get(currentReportHUD).getOwnerEntity();
+    }
+
+    //available units = total_units - occupied_units (returns empty string if values missing)
+    public String getCurrentHUDAvailableUnits(){
+        HUDReport r = HUDreports.get(currentReportHUD);
+        if (r == null) return "";
+        String total = r.getTotalUnits();
+        String occupied = r.getOccupiedUnits();
+        if (total == null || total.trim().isEmpty() || occupied == null || occupied.trim().isEmpty()) {
+            return "";
+        }
+        try{
+            int t = Integer.parseInt(total);
+            int o = Integer.parseInt(occupied);
+            int avail = t - o;
+            return String.format("%d", avail);
+        }catch(NumberFormatException ex){
+            return "";
+        }
     }
 
 }
