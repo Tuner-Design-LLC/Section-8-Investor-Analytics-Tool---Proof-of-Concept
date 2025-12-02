@@ -38,7 +38,7 @@
     <census_tract>42027012000</census_tract>
     <cbsa_code>37964</cbsa_code>
     <hud_region_name>Mid-Atlantic Region</hud_region_name>
-    <rural_indicator>False</rural_indicator>
+    <rural_indicator>false</rural_indicator>
     <source_url>https://www.huduser.gov/portal/datasets/fmr.html</source_url>
     <scrape_date>2025-10-29</scrape_date>
     <dataset_last_updated>2025-10-15 00:00:00</dataset_last_updated>

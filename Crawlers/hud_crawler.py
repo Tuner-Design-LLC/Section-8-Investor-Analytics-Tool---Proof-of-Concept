@@ -1,9 +1,24 @@
 # NOTE - UML diagrams and further documentation to be added in future iterations.
 # NOTE - Repasted hud_crawler.py to create test report like FMR crawler
 
+import sys
 import pandas as pd
 from typing import Optional, Dict
 import xml.etree.ElementTree as ET
+from pathlib import Path
+
+# Ensure repository root is on sys.path so sibling package `Util` can be imported
+repo_root = Path(__file__).resolve().parents[1]
+if str(repo_root) not in sys.path:
+    sys.path.insert(0, str(repo_root))
+
+from Util.crawler_utils import (
+    load_dataset,
+    ensure_columns,
+    coerce_numeric,
+    coerce_datetime,
+    dataframe_to_xml,
+)
 
 """
 HUDCrawler - Prototype static file crawler for HUD General datasets.
@@ -31,14 +46,9 @@ class HUDCrawler:
 
     # This function loads a CSV or Excel file into a raw pandas dataframe
     def load(self, path: Optional[str] = None) -> pd.DataFrame:
-        """Load CSV or Excel into raw dataframe."""
+        """Load CSV or Excel into raw dataframe using shared utility."""
         p = path or self.dataset_path
-        if p is None:
-            raise ValueError("You must provide a path to HUD dataset (CSV or XLSX).")
-        if p.lower().endswith(('.xls', '.xlsx')):
-            self.raw = pd.read_excel(p, dtype=str)
-        else:
-            self.raw = pd.read_csv(p, dtype=str)
+        self.raw = load_dataset(p, dtype=str)
         return self.raw
 
     # This function normalizes a HUD general dataset into a canonical set of columns
@@ -62,21 +72,18 @@ class HUDCrawler:
             "latitude","longitude","census_tract","cbsa_code","hud_region_name","rural_indicator",
             "source_url","scrape_date","dataset_last_updated","update_frequency","data_license","crawler_run_id","version_hash"
         ]
-        for col in required:
-            if col not in df.columns:
-                df[col] = None
+        # ensure required columns exist and return subset copy
+        df = ensure_columns(df, required, fill_value=None)
 
-        # Type conversions for numeric fields to avoid error handling (when applicable)
-        numeric_cols = ["ami_median_family_income","ami_30_percent_limit","ami_50_percent_limit","ami_80_percent_limit",
-                        "total_units","occupied_units","vacancy_rate","assisted_units","hud_inspection_score","construction_year"]
-        for c in numeric_cols:
-            df[c] = pd.to_numeric(df[c], errors='coerce')
+        # Type conversions
+        numeric_cols = [
+            "ami_median_family_income", "ami_30_percent_limit", "ami_50_percent_limit", "ami_80_percent_limit",
+            "total_units", "occupied_units", "vacancy_rate", "assisted_units", "hud_inspection_score", "construction_year"
+        ]
+        coerce_numeric(df, numeric_cols)
+        coerce_datetime(df, ["last_inspection_date", "dataset_last_updated"]) 
 
-        # Handling of date fields
-        df["last_inspection_date"] = pd.to_datetime(df["last_inspection_date"], errors='coerce')
-        df["dataset_last_updated"] = pd.to_datetime(df["dataset_last_updated"], errors='coerce')
-
-        self.df = df[required].copy()
+        self.df = df
         return self.df
 
     # Simple filter function to filter normalized data by county name    
@@ -99,29 +106,11 @@ class HUDCrawler:
     def create_xml_report(self, out_path: str, df: Optional[pd.DataFrame] = None, root_name: str = "HUDReports", item_name: str = "Report"):
 
         # If no DataFrame is provided, use the normalized one
+        # Use shared utility to write XML from DataFrame
         if df is None:
             df = self.df
         if df is None or df.empty:
             raise ValueError("No data available to write XML report.")
 
-        root = ET.Element(root_name)
-        temp_id = 0
-        for _, row in df.iterrows():
-            report_elem = ET.SubElement(root, item_name, id=str(temp_id))
-            for col in df.columns:
-                val = row[col]
-                text = "" if pd.isna(val) else str(val)
-                tag = str(col).replace(" ", "")
-                ET.SubElement(report_elem, tag).text = text
-            temp_id += 1
-
-        # Print formatting (pretty printing) for user readability
-        try:
-            ET.indent(root, space="  ", level=0)
-        except Exception:
-            # Ignore if Python version is older
-            pass
-
-        tree = ET.ElementTree(root)
-        with open(out_path, "wb") as f:
-            tree.write(f, encoding="utf-8", xml_declaration=True, short_empty_elements=False)
+        dataframe_to_xml(df, out_path, root_name=root_name, item_name=item_name,
+                         tag_normalizer=lambda s: str(s).replace(' ', ''))

@@ -2,14 +2,24 @@
 # Prototype PHA crawler using consolidated domain objects from PHADomain.py
 
 import os
+import sys
 import pandas as pd
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
+from pathlib import Path
+
+# Ensure the repository root is on sys.path so relative sibling packages
+# (like `Util`) can be imported when running from `Crawlers/`.
+repo_root = Path(__file__).resolve().parents[1]
+if str(repo_root) not in sys.path:
+    sys.path.insert(0, str(repo_root))
+
 from PHADomain import (
     Primary, HousingProgram, GeographicContextual, FinanceFunding,
     DemographicOccupancy, CompliancePerformance, AnalyticsMetadata,
     AdministrativeContact
 )
+from Util.crawler_utils import load_dataset, ensure_columns, dataframe_to_xml
 
 class PHACrawler:
     """Prototype static file PHA crawler that normalizes data and creates XML reports."""
@@ -23,14 +33,7 @@ class PHACrawler:
     # Load CSV or Excel
     def load(self, path=None):
         p = path or self.dataset_path
-        if p is None:
-            raise ValueError("Dataset path is required")
-        if not os.path.exists(p):
-            raise FileNotFoundError(f"Dataset file not found: {p}")
-        if p.lower().endswith((".xls", ".xlsx")):
-            self.raw = pd.read_excel(p, dtype=str)
-        else:
-            self.raw = pd.read_csv(p, dtype=str)
+        self.raw = load_dataset(p, dtype=str)
         return self.raw
 
     # Normalize the data into canonical columns
@@ -52,33 +55,14 @@ class PHACrawler:
             "executive_director","contact_last_verified"
         ]
 
-        # Add missing columns with None
-        for col in required:
-            if col not in df.columns:
-                df[col] = None
-
-        self.df = df[required].copy()
+        # Ensure required columns exist and return ordered copy
+        self.df = ensure_columns(df, required, fill_value=None)
         return self.df
 
     # Convert normalized DataFrame to XML
     def create_xml_report(self, out_path, df=None, root_name="PHAReports", item_name="PHA"):
         df = df or self.df
-        if df.empty:
-            raise ValueError("No data available for XML report.")
-
-        root = ET.Element(root_name)
-        for idx, row in df.iterrows():
-            pha_elem = ET.SubElement(root, item_name, id=str(idx))
-            for col in df.columns:
-                ET.SubElement(pha_elem, col).text = "" if pd.isna(row[col]) else str(row[col])
-
-        try:
-            ET.indent(root, space="  ", level=0)  # Python 3.9+
-        except AttributeError:
-            pass
-
-        tree = ET.ElementTree(root)
-        tree.write(out_path, encoding="utf-8", xml_declaration=True, short_empty_elements=False)
+        dataframe_to_xml(df, out_path, root_name=root_name, item_name=item_name)
 
     # Generate example records using your domain objects
     def generate_record_objects(self):

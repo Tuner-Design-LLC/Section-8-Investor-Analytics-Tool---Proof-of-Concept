@@ -650,14 +650,22 @@ public class ReportGUIController {
         TotalReports.setText(String.format("%d",GUI1.getTotalNumOfReports()));
         TotalReportsFMR.setText(String.format("%d",GUI1.getNumOfReportsFMR()));
 
-        FiscalYear.setText(String.format(GUI1.getCurrentFMRReportFiscalYear()));
-        CountyName.setText(String.format(GUI1.getCurrentFMRReportCountyName()));
-        NumBedrooms.setText(String.format(GUI1.getCurrentFMRReportNumOfBedrooms()));
-        FMRNumber.setText(String.format("$%s",GUI1.getCurrentFMRReportFMRNumber()));
-        HouseholdIncome.setText(String.format("$%s",GUI1.getCurrentFMRReportHouseholdIncome()));
-        MarketType.setText(String.format(GUI1.getCurrentFMRReportMarketType()));
-        ZipCode.setText(String.format(GUI1.getCurrentFMRReportZipCode()));
-        State.setText(String.format(GUI1.getCurrentFMRReportState()));
+        String fy = GUI1.getCurrentFMRReportFiscalYear();
+        FiscalYear.setText(fy == null ? "" : fy);
+        String county = GUI1.getCurrentFMRReportCountyName();
+        CountyName.setText(county == null ? "" : county);
+        String nb = GUI1.getCurrentFMRReportNumOfBedrooms();
+        NumBedrooms.setText(nb == null ? "" : nb);
+        String fmrNum = GUI1.getCurrentFMRReportFMRNumber();
+        FMRNumber.setText(fmrNum == null ? "" : String.format("$%s", fmrNum));
+        String hh = GUI1.getCurrentFMRReportHouseholdIncome();
+        HouseholdIncome.setText(hh == null ? "" : String.format("$%s", hh));
+        String mtype = GUI1.getCurrentFMRReportMarketType();
+        MarketType.setText(mtype == null ? "" : mtype);
+        String zip = GUI1.getCurrentFMRReportZipCode();
+        ZipCode.setText(zip == null ? "" : zip);
+        String state = GUI1.getCurrentFMRReportState();
+        State.setText(state == null ? "" : state);
 
         double avgFMR = GUI1.getAverageFMRNumber();
         if (Double.isNaN(avgFMR))
@@ -684,17 +692,28 @@ public class ReportGUIController {
         TotalReports.setText(String.format("%d",GUI1.getTotalNumOfReports()));
         TotalReportsPHA.setText(String.format("%d",GUI1.getNumOfReportsPHA()));
 
-        StatePHA.setText(String.format(GUI1.getCurrentPHAReportState()));
-        CityPHA.setText(String.format(GUI1.getCurrentPHAReportCity()));
-        CountyNamePHA.setText(String.format(GUI1.getCurrentPHAReportCounty()));
-        ZipCodePHA.setText(String.format(GUI1.getCurrentPHAReportZipCode()));
-        AddressPHA.setText(String.format(GUI1.getCurrentPHAReportAddress()));
-        JurisdictionPHA.setText(String.format(GUI1.getCurrentPHAReportJurisdiction()));
-        PHACode.setText(String.format(GUI1.getCurrentPHAReportCode()));
-        DirectorPHA.setText(String.format(GUI1.getCurrentPHAReportDirector()));
-        PhonePHA.setText(String.format(GUI1.getCurrentPHAReportPhone()));
-        FaxPHA.setText(String.format(GUI1.getCurrentPHAReportFax()));
-        EmailPHA.setText(String.format(GUI1.getCurrentPHAReportEmail()));
+        String sPHA = GUI1.getCurrentPHAReportState();
+        StatePHA.setText(sPHA == null ? "" : sPHA);
+        String city = GUI1.getCurrentPHAReportCity();
+        CityPHA.setText(city == null ? "" : city);
+        String countyPHA = GUI1.getCurrentPHAReportCounty();
+        CountyNamePHA.setText(countyPHA == null ? "" : countyPHA);
+        String zipPHA = GUI1.getCurrentPHAReportZipCode();
+        ZipCodePHA.setText(zipPHA == null ? "" : zipPHA);
+        String addrPHA = GUI1.getCurrentPHAReportAddress();
+        AddressPHA.setText(addrPHA == null ? "" : addrPHA);
+        String jur = GUI1.getCurrentPHAReportJurisdiction();
+        JurisdictionPHA.setText(jur == null ? "" : jur);
+        String code = GUI1.getCurrentPHAReportCode();
+        PHACode.setText(code == null ? "" : code);
+        String dir = GUI1.getCurrentPHAReportDirector();
+        DirectorPHA.setText(dir == null ? "" : dir);
+        String phone = GUI1.getCurrentPHAReportPhone();
+        PhonePHA.setText(phone == null ? "" : phone);
+        String fax = GUI1.getCurrentPHAReportFax();
+        FaxPHA.setText(fax == null ? "" : fax);
+        String email = GUI1.getCurrentPHAReportEmail();
+        EmailPHA.setText(email == null ? "" : email);
 
     }
 
@@ -723,17 +742,17 @@ public class ReportGUIController {
             TotalReportsHUD.setText(String.format("%d", GUI1.getNumOfReportsHUD()));
 
         if (propertyAddressHUD != null)
-            propertyAddressHUD.setText(String.format(GUI1.getCurrentHUDReportPropertyAddress()));
+            propertyAddressHUD.setText(GUI1.getCurrentHUDReportPropertyAddress() == null ? "" : GUI1.getCurrentHUDReportPropertyAddress());
         if (stateHUD != null)
-            stateHUD.setText(String.format(GUI1.getCurrentHUDReportState()));
+            stateHUD.setText(GUI1.getCurrentHUDReportState() == null ? "" : GUI1.getCurrentHUDReportState());
         if (countyHUD != null)
-            countyHUD.setText(String.format(GUI1.getCurrentHUDReportCounty()));
+            countyHUD.setText(GUI1.getCurrentHUDReportCounty() == null ? "" : GUI1.getCurrentHUDReportCounty());
         if (zipcodeHUD != null)
-            zipcodeHUD.setText(String.format(GUI1.getCurrentHUDReportZipCode()));
+            zipcodeHUD.setText(GUI1.getCurrentHUDReportZipCode() == null ? "" : GUI1.getCurrentHUDReportZipCode());
         if (propertyIDHUD != null)
-            propertyIDHUD.setText(String.format(GUI1.getCurrentHUDReportPropertyID()));
+            propertyIDHUD.setText(GUI1.getCurrentHUDReportPropertyID() == null ? "" : GUI1.getCurrentHUDReportPropertyID());
         if (fiscalYearHUD != null)
-            fiscalYearHUD.setText(String.format(GUI1.getCurrentHUDReportFiscalYear()));
+            fiscalYearHUD.setText(GUI1.getCurrentHUDReportFiscalYear() == null ? "" : GUI1.getCurrentHUDReportFiscalYear());
         if (AMIByCountyHUD != null) {
             String ami = GUI1.getCurrentHUDReportAMIByCounty();
             if (ami == null || ami.trim().isEmpty()) {

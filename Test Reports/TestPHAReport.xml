@@ -115,8 +115,8 @@
     <num_public_units>12972</num_public_units>
     <num_total_assisted>31377</num_total_assisted>
     <waiting_list_status></waiting_list_status>
-    <occupancy_rate></occupancy_rate>
-    <hcv_util_rate></hcv_util_rate>
+    <occupancy_rate>0.9</occupancy_rate>
+    <hcv_util_rate>0.27</hcv_util_rate>
     <latitude>39.9526</latitude>
     <longitude>-75.1652</longitude>
     <msa_code>37980</msa_code>
@@ -165,7 +165,7 @@
     <num_total_assisted>2810</num_total_assisted>
     <waiting_list_status></waiting_list_status>
     <occupancy_rate>0.95</occupancy_rate>
-    <hcv_util_rate></hcv_util_rate>
+    <hcv_util_rate>0.35</hcv_util_rate>
     <latitude></latitude>
     <longitude></longitude>
     <msa_code></msa_code>
@@ -173,7 +173,7 @@
     <annual_budget></annual_budget>
     <capital_fund_allocation></capital_fund_allocation>
     <financial_report_year></financial_report_year>
-    <avg_tenant_income></avg_tenant_income>
+    <avg_tenant_income>61218.75</avg_tenant_income>
     <median_rent_dist></median_rent_dist>
     <household_type_dist></household_type_dist>
     <avg_tenant_rent_share></avg_tenant_rent_share>
