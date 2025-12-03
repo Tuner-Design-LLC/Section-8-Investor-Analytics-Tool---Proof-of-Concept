@@ -744,6 +744,13 @@ public class ReportGUIController {
         FaxPHA.setText(fax == null ? "" : fax);
         String email = GUI1.getCurrentPHAReportEmail();
         EmailPHA.setText(email == null ? "" : email);
+        // ... existing PHA field updates ...
+    
+    double avgHcvUtil = GUI1.getAverageHcvUtilRatePHA();
+    if (Double.isNaN(avgHcvUtil))
+        AvgHCVUtilRatePHA.setText(""); 
+    else
+        AvgHCVUtilRatePHA.setText(String.format("%.0f%%", avgHcvUtil));  // Display as percentage
 
     }
 

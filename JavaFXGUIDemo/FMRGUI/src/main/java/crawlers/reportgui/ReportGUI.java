@@ -104,6 +104,30 @@ public class ReportGUI {
         filterEnabledPHA = !filterEnabledPHA;
     }
 
+    //get average HCV utilization rate for PHA reports
+    public double getAverageHcvUtilRatePHA(){
+        double temp = 0;
+        int count = 0;
+        if(filterEnabledPHA) {
+            for(PHAReport report: PHAReportsFiltered){
+                temp += Double.parseDouble(report.getHcvUtilRate());
+            }
+            count = PHAReportsFiltered.size();
+        }else {
+            for(PHAReport report: PHAreports){
+                temp += Double.parseDouble(report.getHcvUtilRate());
+            }
+            count = PHAreports.size();
+        }
+
+        if (count == 0) {
+            return Double.NaN;
+        }
+
+        double avg = temp / count;
+        return (double) Math.round(avg);
+    }
+
     //sets the file path to load from
     public void setFilePath(String filePath) {
         this.filePath = filePath;
