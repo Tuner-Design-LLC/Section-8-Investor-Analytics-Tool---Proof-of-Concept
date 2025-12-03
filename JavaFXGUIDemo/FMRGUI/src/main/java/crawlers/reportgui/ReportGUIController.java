@@ -257,6 +257,36 @@ public class ReportGUIController {
     private TextField ZipCodePHA;
 
     @FXML
+    private TextField TenantIncomePHA;
+
+    @FXML
+    private TextField MedTenantIncomePHA;
+
+    @FXML
+    private TextField AvgHCVUnitsPHA;
+
+    @FXML
+    private TextField HCVUnitsPHA;
+
+    @FXML
+    private TextField AvgHCVUtilRatePHA;
+
+    @FXML
+    private TextField HCVUtilRatePHA;
+
+    @FXML
+    private TextField AvgInspectCompPHA;
+
+    @FXML
+    private TextField InspectCompPHA;
+
+    @FXML
+    private TextField AvgOccupancyRatePHA;
+
+    @FXML
+    private TextField OccupancyRatePHA;
+
+    @FXML
     private TextField CurrentReportHUD;
 
     @FXML
