@@ -106,6 +106,41 @@ public class ReportGUI {
         filterEnabledPHA = !filterEnabledPHA;
     }
 
+    
+    //get Median Tenant Income for PHA reports
+    public double getMedianTenantIncomePHA(){
+        List<Double> incomes = new ArrayList<>();
+        if(filterEnabledPHA) {
+            for(PHAReport report: PHAReportsFiltered){
+                try {
+                    incomes.add(Double.valueOf(report.getAvgTenantIncome()));
+                } catch (NumberFormatException e) {
+                    // Skip invalid numbers
+                }
+            }
+        }else {
+            for(PHAReport report: PHAreports){
+                try {
+                    incomes.add(Double.valueOf(report.getAvgTenantIncome()));
+                } catch (NumberFormatException e) {
+                    // Skip invalid numbers
+                }
+            }
+        }
+
+        if (incomes.isEmpty()) {
+            return Double.NaN;
+        }
+
+        Collections.sort(incomes);
+        int size = incomes.size();
+        if (size % 2 == 1) {
+            return incomes.get(size / 2);
+        } else {
+            return (incomes.get((size / 2) - 1) + incomes.get(size / 2)) / 2.0;
+        }
+    }
+
     //get average HCV utilization rate for PHA reports
     public double getAverageHcvUtilRatePHA(){
         double temp = 0;

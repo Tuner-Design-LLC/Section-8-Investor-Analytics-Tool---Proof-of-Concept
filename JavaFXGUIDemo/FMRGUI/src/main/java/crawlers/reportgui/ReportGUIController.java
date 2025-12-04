@@ -754,6 +754,8 @@ public class ReportGUIController {
         InspectCompPHA.setText(compPHA == null ? "" : compPHA);
         String tenIncomePHA = GUI1.getCurrentPHAAvgTenantIncome();
         TenantIncomePHA.setText(tenIncomePHA == null ? "" : tenIncomePHA);
+        String medtenIncomePHA = GUI1.getCurrentPHAAvgTenantIncome();
+        TenantIncomePHA.setText(tenIncomePHA == null ? "" : tenIncomePHA);
         // ... existing PHA field updates ...
 
         //Display average HCV Utilisation Rate
@@ -776,6 +778,14 @@ public class ReportGUIController {
             AvgInspectCompPHA.setText("");
         else
             AvgInspectCompPHA.setText(String.format("%.2f%%", avgComp * 100));
+
+        //Display median Tenant Income
+        double medIncome = GUI1.getMedianTenantIncomePHA();
+        if (Double.isNaN(medIncome))
+            MedTenantIncomePHA.setText("0.00");
+        else
+            MedTenantIncomePHA.setText(String.format("$%.2f", medIncome));
+           
 
         //Display average HCV Units
         double avgUnits = GUI1.getAvgHcvUnitsPHA();

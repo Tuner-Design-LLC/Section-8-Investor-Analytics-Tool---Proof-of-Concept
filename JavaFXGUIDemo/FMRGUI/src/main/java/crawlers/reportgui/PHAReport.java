@@ -260,14 +260,7 @@ public class PHAReport {
     public void setFinancialReportYear(String financialReportYear) {
         this.financialReportYear = financialReportYear;
     }
-
-    public String getAvgTenantIncome() {
-        return avgTenantIncome;
-    }
-
-    public void setAvgTenantIncome(String avgTenantIncome) {
-        this.avgTenantIncome = avgTenantIncome;
-    }
+    
 
     public String getMedianRentDist() {
         return medianRentDist;
@@ -285,6 +278,13 @@ public class PHAReport {
         this.householdTypeDist = householdTypeDist;
     }
 
+    public String getAvgTenantIncome() {
+        return avgTenantIncome;
+    }
+    public void setAvgTenantIncome(String avgTenantIncome) {
+        this.avgTenantIncome = avgTenantIncome;
+    }
+
     public String getAvgTenantRentShare() {
         return avgTenantRentShare;
     }
@@ -292,6 +292,7 @@ public class PHAReport {
     public void setAvgTenantRentShare(String avgTenantRentShare) {
         this.avgTenantRentShare = avgTenantRentShare;
     }
+
 
     public String getAvgSubsidyAmount() {
         return avgSubsidyAmount;

@@ -26,7 +26,7 @@
     <annual_budget>5000000</annual_budget>
     <capital_fund_allocation>1000000</capital_fund_allocation>
     <financial_report_year>2025</financial_report_year>
-    <avg_tenant_income>32000</avg_tenant_income>
+    <avg_tenant_income>32000.0</avg_tenant_income>
     <median_rent_dist>1200</median_rent_dist>
     <household_type_dist>Family</household_type_dist>
     <avg_tenant_rent_share>0.3</avg_tenant_rent_share>
