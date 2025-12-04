@@ -3,6 +3,8 @@ package crawlers.reportgui;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 import java.util.Objects;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -125,8 +127,85 @@ public class ReportGUI {
         }
 
         double avg = temp / count;
-        return (double) Math.round(avg);
+        return avg;
     }
+
+    // get average Occupancy Rate for PHA reports
+    public double getAvgOccupancyRatePHA() {
+        double temp = 0;
+        int count = 0;
+
+        if (filterEnabledPHA) {
+            for (PHAReport report : PHAReportsFiltered) {
+                temp += Double.parseDouble(report.getOccupancyRate());
+            }
+            count = PHAReportsFiltered.size();
+        } else {
+            for (PHAReport report : PHAreports) {
+                temp += Double.parseDouble(report.getOccupancyRate());
+            }
+            count = PHAreports.size();
+        }
+
+        if (count == 0) {
+            return Double.NaN;
+        }
+
+        return temp / count;
+    }
+
+    // get average Inspection Compliance Rate for PHA reports
+    public double getAvgInspectionRatePHA() {
+        double temp = 0;
+        int count = 0;
+
+        if (filterEnabledPHA) {
+            for (PHAReport report : PHAReportsFiltered) {
+                temp += Double.parseDouble(report.getInspectionComplianceRate());
+            }
+            count = PHAReportsFiltered.size();
+        } else {
+            for (PHAReport report : PHAreports) {
+                temp += Double.parseDouble(report.getInspectionComplianceRate());
+            }
+            count = PHAreports.size();
+        }
+
+        if (count == 0) {
+            return Double.NaN;
+        }
+
+        return temp / count;
+    }
+
+    // get average number of HCV units for PHA reports
+    public double getAvgHcvUnitsPHA() {
+        double temp = 0;
+        int count = 0;
+
+        if (filterEnabledPHA) {
+            for (PHAReport report : PHAReportsFiltered) {
+                temp += Double.parseDouble(report.getNumHcvUnits());
+            }
+            count = PHAReportsFiltered.size();
+        } else {
+            for (PHAReport report : PHAreports) {
+                temp += Double.parseDouble(report.getNumHcvUnits());
+            }
+            count = PHAreports.size();
+        }
+
+        if (count == 0) {
+            return Double.NaN;
+        }
+
+        double avg = temp / count;
+        return (double) Math.round(avg);   // rounded integer as a double
+
+
+
+    }
+
 
     //sets the file path to load from
     public void setFilePath(String filePath) {

@@ -717,10 +717,10 @@ public class ReportGUIController {
     }
 
     //update all PHA text fields
-    private void updateReportGUIPHA(){
-        CurrentReportPHA.setText(String.format("%d",GUI1.getCurrentReportPHA()+1));
-        TotalReports.setText(String.format("%d",GUI1.getTotalNumOfReports()));
-        TotalReportsPHA.setText(String.format("%d",GUI1.getNumOfReportsPHA()));
+    private void updateReportGUIPHA() {
+        CurrentReportPHA.setText(String.format("%d", GUI1.getCurrentReportPHA() + 1));
+        TotalReports.setText(String.format("%d", GUI1.getTotalNumOfReports()));
+        TotalReportsPHA.setText(String.format("%d", GUI1.getNumOfReportsPHA()));
 
         String sPHA = GUI1.getCurrentPHAReportState();
         StatePHA.setText(sPHA == null ? "" : sPHA);
@@ -755,12 +755,35 @@ public class ReportGUIController {
         String tenIncomePHA = GUI1.getCurrentPHAAvgTenantIncome();
         TenantIncomePHA.setText(tenIncomePHA == null ? "" : tenIncomePHA);
         // ... existing PHA field updates ...
-    
-    double avgHcvUtil = GUI1.getAverageHcvUtilRatePHA();
-    if (Double.isNaN(avgHcvUtil))
-        AvgHCVUtilRatePHA.setText(""); 
-    else
-        AvgHCVUtilRatePHA.setText(String.format("%.0f%%", avgHcvUtil));  // Display as percentage
+
+        //Display average HCV Utilisation Rate
+        double avgHcvUtil = GUI1.getAverageHcvUtilRatePHA();
+        if (Double.isNaN(avgHcvUtil))
+            AvgHCVUtilRatePHA.setText("");
+        else
+            AvgHCVUtilRatePHA.setText(String.format("%.2f%%", avgHcvUtil * 100));  // Display as percentage
+
+        //Display average Occupancy Rate
+        double avgOcc = GUI1.getAvgOccupancyRatePHA();
+        if (Double.isNaN(avgOcc))
+            AvgOccupancyRatePHA.setText("");
+        else
+            AvgOccupancyRatePHA.setText(String.format("%.2f%%", avgOcc * 100));
+
+        //Display average Inspection Compliance Rate
+        double avgComp = GUI1.getAvgInspectionRatePHA();
+        if (Double.isNaN(avgComp))
+            AvgInspectCompPHA.setText("");
+        else
+            AvgInspectCompPHA.setText(String.format("%.2f%%", avgComp * 100));
+
+        //Display average HCV Units
+        double avgUnits = GUI1.getAvgHcvUnitsPHA();
+
+        if (Double.isNaN(avgUnits))
+            AvgHCVUnitsPHA.setText("");
+        else
+            AvgHCVUnitsPHA.setText(String.format("%.0f", avgUnits));
 
     }
 
