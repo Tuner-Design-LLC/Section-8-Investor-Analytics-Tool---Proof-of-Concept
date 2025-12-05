@@ -26,7 +26,7 @@
     <annual_budget>5000000</annual_budget>
     <capital_fund_allocation>1000000</capital_fund_allocation>
     <financial_report_year>2025</financial_report_year>
-    <avg_tenant_income>32000.0</avg_tenant_income>
+    <avg_tenant_income>32000</avg_tenant_income>
     <median_rent_dist>1200</median_rent_dist>
     <household_type_dist>Family</household_type_dist>
     <avg_tenant_rent_share>0.3</avg_tenant_rent_share>
@@ -82,7 +82,7 @@
     <avg_subsidy_amount></avg_subsidy_amount>
     <semap_score></semap_score>
     <last_hud_audit_date></last_hud_audit_date>
-    <inspection_compliance_rate></inspection_compliance_rate>
+    <inspection_compliance_rate>0.92</inspection_compliance_rate>
     <performance_category></performance_category>
     <last_updated></last_updated>
     <source_url>https://www.harrisburghousing.org</source_url>
@@ -131,7 +131,7 @@
     <avg_subsidy_amount></avg_subsidy_amount>
     <semap_score></semap_score>
     <last_hud_audit_date></last_hud_audit_date>
-    <inspection_compliance_rate></inspection_compliance_rate>
+    <inspection_compliance_rate>0.93</inspection_compliance_rate>
     <performance_category></performance_category>
     <last_updated></last_updated>
     <source_url></source_url>
@@ -180,7 +180,7 @@
     <avg_subsidy_amount></avg_subsidy_amount>
     <semap_score></semap_score>
     <last_hud_audit_date></last_hud_audit_date>
-    <inspection_compliance_rate></inspection_compliance_rate>
+    <inspection_compliance_rate>0.95</inspection_compliance_rate>
     <performance_category></performance_category>
     <last_updated></last_updated>
     <source_url></source_url>

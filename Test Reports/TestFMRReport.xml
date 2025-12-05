@@ -18,7 +18,7 @@
     <SurveySourceYear>2021-2025</SurveySourceYear>
     <AdjustmentFactor>1.04</AdjustmentFactor>
     <IsSmallAreaFMR>True</IsSmallAreaFMR>
-    <MedianHouseholdIncome>84500</MedianHouseholdIncome>
+    <MedianHouseholdIncome>85000</MedianHouseholdIncome>
     <SourceURL>https://www.huduser.gov/portal/datasets/fmr.html</SourceURL>
     <ScrapeDate>2025-10-29</ScrapeDate>
     <VersionHash>a8f2b9c4</VersionHash>
@@ -68,7 +68,7 @@
     <SurveySourceYear>2021-2025</SurveySourceYear>
     <AdjustmentFactor>1.04</AdjustmentFactor>
     <IsSmallAreaFMR>True</IsSmallAreaFMR>
-    <MedianHouseholdIncome>84000</MedianHouseholdIncome>
+    <MedianHouseholdIncome>85000</MedianHouseholdIncome>
     <SourceURL>https://www.huduser.gov/portal/datasets/fmr.html</SourceURL>
     <ScrapeDate>2025-10-29</ScrapeDate>
     <VersionHash>a8f2b9c4</VersionHash>
@@ -79,7 +79,7 @@
     <FiscalYear>2025</FiscalYear>
     <StateName>Pennsylvania</StateName>
     <StateCode>PA</StateCode>
-    <CountyName>Aston</CountyName>
+    <CountyName>Delaware County</CountyName>
     <FIPSCode>42091</FIPSCode>
     <HUDGeoID>HMFA42091</HUDGeoID>
     <MSACode>37980</MSACode>
@@ -104,7 +104,7 @@
     <FiscalYear>2025</FiscalYear>
     <StateName>Pennsylvania</StateName>
     <StateCode>PA</StateCode>
-    <CountyName>Aston</CountyName>
+    <CountyName>Delaware County</CountyName>
     <FIPSCode>42091</FIPSCode>
     <HUDGeoID>HMFA42091</HUDGeoID>
     <MSACode>37980</MSACode>
@@ -118,7 +118,7 @@
     <SurveySourceYear>2021-2025</SurveySourceYear>
     <AdjustmentFactor>1.04</AdjustmentFactor>
     <IsSmallAreaFMR>True</IsSmallAreaFMR>
-    <MedianHouseholdIncome>96000</MedianHouseholdIncome>
+    <MedianHouseholdIncome>80000</MedianHouseholdIncome>
     <SourceURL>https://www.huduser.gov/portal/datasets/fmr.html</SourceURL>
     <ScrapeDate>2025-10-29</ScrapeDate>
     <VersionHash>a8f2b9c4</VersionHash>
@@ -129,7 +129,7 @@
     <FiscalYear>2025</FiscalYear>
     <StateName>Pennsylvania</StateName>
     <StateCode>PA</StateCode>
-    <CountyName>Aston</CountyName>
+    <CountyName>Delaware County</CountyName>
     <FIPSCode>42091</FIPSCode>
     <HUDGeoID>HMFA42091</HUDGeoID>
     <MSACode>37980</MSACode>
@@ -143,7 +143,7 @@
     <SurveySourceYear>2021-2025</SurveySourceYear>
     <AdjustmentFactor>1.04</AdjustmentFactor>
     <IsSmallAreaFMR>True</IsSmallAreaFMR>
-    <MedianHouseholdIncome>100000</MedianHouseholdIncome>
+    <MedianHouseholdIncome>80000</MedianHouseholdIncome>
     <SourceURL>https://www.huduser.gov/portal/datasets/fmr.html</SourceURL>
     <ScrapeDate>2025-10-29</ScrapeDate>
     <VersionHash>a8f2b9c4</VersionHash>
@@ -154,7 +154,7 @@
     <FiscalYear>2025</FiscalYear>
     <StateName>New Jersey</StateName>
     <StateCode>NJ</StateCode>
-    <CountyName>Camden</CountyName>
+    <CountyName>Camden County</CountyName>
     <FIPSCode>42091</FIPSCode>
     <HUDGeoID>HMFA42091</HUDGeoID>
     <MSACode>37980</MSACode>
@@ -168,7 +168,7 @@
     <SurveySourceYear>2021-2025</SurveySourceYear>
     <AdjustmentFactor>1.04</AdjustmentFactor>
     <IsSmallAreaFMR>True</IsSmallAreaFMR>
-    <MedianHouseholdIncome>130000</MedianHouseholdIncome>
+    <MedianHouseholdIncome>67000</MedianHouseholdIncome>
     <SourceURL>https://www.huduser.gov/portal/datasets/fmr.html</SourceURL>
     <ScrapeDate>2025-10-29</ScrapeDate>
     <VersionHash>a8f2b9c4</VersionHash>

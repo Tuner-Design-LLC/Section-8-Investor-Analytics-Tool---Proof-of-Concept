@@ -205,8 +205,8 @@
     <household_size>6 Person Household</household_size>
     <program_type>Housing Choice Voucher (HCV)/Section 8</program_type>
     <sub_program>Project Based Voucher</sub_program>
-    <total_units>102</total_units>
-    <occupied_units>45</occupied_units>
+    <total_units>18405</total_units>
+    <occupied_units>13459</occupied_units>
     <vacancy_rate>0.029</vacancy_rate>
     <assisted_units>72</assisted_units>
     <funding_source>HCV</funding_source>
