@@ -322,10 +322,19 @@ public class ReportGUIController {
     private TextField availableUnitsHUD;
 
     @FXML
+    private TextField avgMedianIncomeHUD;
+
+    @FXML
+    private TextField avgVacancyHUD;
+
+    @FXML
+    private TextField avgInspectScoreHUD;
+
+    @FXML
     private Button stateSelectionButtonHUD;
 
     private ContextMenu hudContextMenu;
-    private String hudSelectedStateAbbrev = "";
+    private String hudSelectedStateAbbrev = ""; // reserved for future filtering (kept for backward compatibility)
 
     @FXML
     public void initialize() {
@@ -858,6 +867,25 @@ public class ReportGUIController {
             ownerHUD.setText(String.format(GUI1.getCurrentHUDReportOwner()));
         if (availableUnitsHUD != null)
             availableUnitsHUD.setText(String.format(GUI1.getCurrentHUDAvailableUnits()));
+
+        // Populate report-set averages for HUD
+        double avgAmi = GUI1.getAverageHudMedianIncome();
+        if (avgMedianIncomeHUD != null) {
+            if (Double.isNaN(avgAmi)) avgMedianIncomeHUD.setText("");
+            else avgMedianIncomeHUD.setText(String.format("$%.2f", avgAmi));
+        }
+
+        double avgVac = GUI1.getAverageHudVacancyRate();
+        if (avgVacancyHUD != null) {
+            if (Double.isNaN(avgVac)) avgVacancyHUD.setText("");
+            else avgVacancyHUD.setText(String.format("%.2f%%", avgVac * 100));
+        }
+
+        double avgInspect = GUI1.getAverageHudInspectionScore();
+        if (avgInspectScoreHUD != null) {
+            if (Double.isNaN(avgInspect)) avgInspectScoreHUD.setText("");
+            else avgInspectScoreHUD.setText(String.format("%.1f", avgInspect));
+        }
     }
 
     //clear all text fields to base values

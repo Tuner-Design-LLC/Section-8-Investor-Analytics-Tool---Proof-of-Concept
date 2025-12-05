@@ -294,19 +294,19 @@
                                                         <Font size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField editable="false" prefHeight="25.0" prefWidth="240.0" GridPane.columnIndex="1" />
+                                                <TextField fx:id="avgMedianIncomeHUD" editable="false" prefHeight="25.0" prefWidth="240.0" GridPane.columnIndex="1" />
                                                 <Label alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="245.0" text="Average Vacancy Rate:" GridPane.rowIndex="1">
                                                     <font>
                                                         <Font size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField editable="false" prefHeight="25.0" prefWidth="240.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="avgVacancyHUD" editable="false" prefHeight="25.0" prefWidth="240.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                 <Label alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="255.0" text="Average HUD Inspection Score:" GridPane.rowIndex="2">
                                                     <font>
                                                         <Font size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField editable="false" prefHeight="25.0" prefWidth="240.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <TextField fx:id="avgInspectScoreHUD" editable="false" prefHeight="25.0" prefWidth="240.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                             </children>
                                         </GridPane>
                                     </children>

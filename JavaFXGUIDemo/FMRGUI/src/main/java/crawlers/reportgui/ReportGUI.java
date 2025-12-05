@@ -626,6 +626,72 @@ public class ReportGUI {
         return HUDreports.get(currentReportHUD).getOwnerEntity();
     }
 
+    // Average HUD median family income across HUDreports. Returns Double.NaN if no valid values.
+    public double getAverageHudMedianIncome(){
+        double sum = 0.0;
+        int count = 0;
+        for (HUDReport r : HUDreports){
+            if (r == null) continue;
+            String ami = r.getAmiMedianFamilyIncome();
+            if (ami == null) continue;
+            ami = ami.trim();
+            if (ami.isEmpty()) continue;
+            try{
+                double v = Double.parseDouble(ami);
+                sum += v;
+                count++;
+            } catch (NumberFormatException ex){
+                // skip invalid
+            }
+        }
+        if (count == 0) return Double.NaN;
+        return sum / count;
+    }
+
+    // Average HUD vacancy rate across HUDreports (expects decimal like 0.065). Returns Double.NaN if no valid values.
+    public double getAverageHudVacancyRate(){
+        double sum = 0.0;
+        int count = 0;
+        for (HUDReport r : HUDreports){
+            if (r == null) continue;
+            String val = r.getVacancyRate();
+            if (val == null) continue;
+            val = val.trim();
+            if (val.isEmpty()) continue;
+            try{
+                double v = Double.parseDouble(val);
+                sum += v;
+                count++;
+            } catch (NumberFormatException ex){
+                // skip invalid
+            }
+        }
+        if (count == 0) return Double.NaN;
+        return sum / count;
+    }
+
+    // Average HUD inspection score across HUDreports. Returns Double.NaN if no valid values.
+    public double getAverageHudInspectionScore(){
+        double sum = 0.0;
+        int count = 0;
+        for (HUDReport r : HUDreports){
+            if (r == null) continue;
+            String val = r.getHudInspectionScore();
+            if (val == null) continue;
+            val = val.trim();
+            if (val.isEmpty()) continue;
+            try{
+                double v = Double.parseDouble(val);
+                sum += v;
+                count++;
+            } catch (NumberFormatException ex){
+                // skip invalid
+            }
+        }
+        if (count == 0) return Double.NaN;
+        return sum / count;
+    }
+
     //available units = total_units - occupied_units (returns empty string if values missing)
     public String getCurrentHUDAvailableUnits(){
         HUDReport r = HUDreports.get(currentReportHUD);
