@@ -10,7 +10,7 @@
     <hud_geoid></hud_geoid>
     <msa_code>37980</msa_code>
     <area_type>Metropolitan</area_type>
-    <ami_median_family_income>101000</ami_median_family_income>
+    <ami_median_family_income>85000</ami_median_family_income>
     <ami_30_percent_limit>24000</ami_30_percent_limit>
     <ami_50_percent_limit>45000</ami_50_percent_limit>
     <ami_80_percent_limit>67000</ami_80_percent_limit>
@@ -18,7 +18,7 @@
     <program_type>Housing Choice Voucher (HCV)/Section 8</program_type>
     <sub_program>Project Based Voucher</sub_program>
     <total_units>50</total_units>
-    <occupied_units>40</occupied_units>
+    <occupied_units>30</occupied_units>
     <vacancy_rate>0.065</vacancy_rate>
     <assisted_units>30</assisted_units>
     <funding_source>HCV</funding_source>
@@ -57,7 +57,7 @@
     <hud_geoid></hud_geoid>
     <msa_code>37980</msa_code>
     <area_type>Metropolitan</area_type>
-    <ami_median_family_income>95000</ami_median_family_income>
+    <ami_median_family_income>85000</ami_median_family_income>
     <ami_30_percent_limit>30000</ami_30_percent_limit>
     <ami_50_percent_limit>50000</ami_50_percent_limit>
     <ami_80_percent_limit>80000</ami_80_percent_limit>
@@ -65,7 +65,7 @@
     <program_type>Housing Choice Voucher (HCV)/Section 8</program_type>
     <sub_program>Project Based Voucher</sub_program>
     <total_units>134</total_units>
-    <occupied_units>131</occupied_units>
+    <occupied_units>100</occupied_units>
     <vacancy_rate>0.022</vacancy_rate>
     <assisted_units>112</assisted_units>
     <funding_source>HCV</funding_source>
@@ -112,7 +112,7 @@
     <program_type>Housing Choice Voucher (HCV)/Section 8</program_type>
     <sub_program>Project Based Voucher</sub_program>
     <total_units>89</total_units>
-    <occupied_units>80</occupied_units>
+    <occupied_units>40</occupied_units>
     <vacancy_rate>0.101</vacancy_rate>
     <assisted_units>58</assisted_units>
     <funding_source>HCV</funding_source>
@@ -159,7 +159,7 @@
     <program_type>Housing Choice Voucher (HCV)/Section 8</program_type>
     <sub_program>Project Based Voucher</sub_program>
     <total_units>133</total_units>
-    <occupied_units>130</occupied_units>
+    <occupied_units>67</occupied_units>
     <vacancy_rate>0.023</vacancy_rate>
     <assisted_units>41</assisted_units>
     <funding_source>HCV</funding_source>
@@ -206,7 +206,7 @@
     <program_type>Housing Choice Voucher (HCV)/Section 8</program_type>
     <sub_program>Project Based Voucher</sub_program>
     <total_units>102</total_units>
-    <occupied_units>99</occupied_units>
+    <occupied_units>45</occupied_units>
     <vacancy_rate>0.029</vacancy_rate>
     <assisted_units>72</assisted_units>
     <funding_source>HCV</funding_source>
@@ -253,7 +253,7 @@
     <program_type>Housing Choice Voucher (HCV)/Section 8</program_type>
     <sub_program>Project Based Voucher</sub_program>
     <total_units>48</total_units>
-    <occupied_units>45</occupied_units>
+    <occupied_units>24</occupied_units>
     <vacancy_rate>0.062</vacancy_rate>
     <assisted_units>14</assisted_units>
     <funding_source>HCV</funding_source>
@@ -300,7 +300,7 @@
     <program_type>Housing Choice Voucher (HCV)/Section 8</program_type>
     <sub_program>Project Based Voucher</sub_program>
     <total_units>125</total_units>
-    <occupied_units>124</occupied_units>
+    <occupied_units>76</occupied_units>
     <vacancy_rate>0.008</vacancy_rate>
     <assisted_units>98</assisted_units>
     <funding_source>HCV</funding_source>

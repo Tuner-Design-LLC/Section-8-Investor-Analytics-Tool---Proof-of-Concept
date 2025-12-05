@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.CheckBox;
 import javafx.geometry.Side;
 // unused imports removed
 import javafx.stage.FileChooser;
@@ -241,6 +242,9 @@ public class ReportGUIController {
     private TextField TotalFilteredReports;
 
     @FXML
+    private TextField TotalFilteredReportsHUD;
+
+    @FXML
     private TextField TotalFilteredReportsPHA;
 
     @FXML
@@ -322,6 +326,12 @@ public class ReportGUIController {
     private TextField availableUnitsHUD;
 
     @FXML
+    private Button FilterButtonHUD;
+
+    @FXML
+    private CheckBox UseFiltersHUD;
+
+    @FXML
     private TextField avgMedianIncomeHUD;
 
     @FXML
@@ -335,6 +345,7 @@ public class ReportGUIController {
 
     private ContextMenu hudContextMenu;
     private String hudSelectedStateAbbrev = ""; // reserved for future filtering (kept for backward compatibility)
+    private String filterStateValueHUD = ""; // full state name for HUD filtering
 
     @FXML
     public void initialize() {
@@ -358,6 +369,7 @@ public class ReportGUIController {
                     if (stateSelectionButtonHUD != null) {
                         stateSelectionButtonHUD.setText(full);
                         hudSelectedStateAbbrev = abbr;
+                        filterStateValueHUD = full;
                     }
                 });
                 hudContextMenu.getItems().add(mi);
@@ -676,6 +688,16 @@ public class ReportGUIController {
         updateReportGUIFMR();
     }
 
+    @FXML //apply HUD filter and update GUI
+    void FilterButtonHUD(ActionEvent event) {
+        GUI1.resetFilterReportListHUD();
+        String state = (filterStateValueHUD == null) ? "" : filterStateValueHUD;
+        GUI1.filterReportsByStateHUD(state);
+        if (TotalFilteredReportsHUD != null)
+            TotalFilteredReportsHUD.setText(String.format("%d", GUI1.getNumOfFilteredReportsHUD()));
+        updateReportGUIHUD();
+    }
+
     @FXML //apply the PHA filters and update the GUI
     void FilterButtonPHA(ActionEvent event) {
         GUI1.resetFilterReportListPHA();
@@ -695,6 +717,12 @@ public class ReportGUIController {
     void ToggleFiltersPHA(ActionEvent event) {
         GUI1.toggleFilterPHA();
         updateReportGUIPHA();
+    }
+
+    @FXML//toggle the HUD filter on/off and update GUI
+    void ToggleFiltersHUD(ActionEvent event) {
+        GUI1.toggleFilterHUD();
+        updateReportGUIHUD();
     }
 
     //update all FMR text fields
@@ -824,6 +852,7 @@ public class ReportGUIController {
         if (GUI1.getNumOfReportsHUD() == 0) {
             if (CurrentReportHUD != null) CurrentReportHUD.setText("");
             if (TotalReportsHUD != null) TotalReportsHUD.setText("0");
+            if (TotalFilteredReportsHUD != null) TotalFilteredReportsHUD.setText("0");
             if (propertyAddressHUD != null) propertyAddressHUD.setText("");
             if (stateHUD != null) stateHUD.setText("");
             if (countyHUD != null) countyHUD.setText("");
@@ -842,6 +871,8 @@ public class ReportGUIController {
             TotalReports.setText(String.format("%d", GUI1.getTotalNumOfReports()));
         if (TotalReportsHUD != null)
             TotalReportsHUD.setText(String.format("%d", GUI1.getNumOfReportsHUD()));
+        if (TotalFilteredReportsHUD != null)
+            TotalFilteredReportsHUD.setText(String.format("%d", GUI1.getNumOfFilteredReportsHUD()));
 
         if (propertyAddressHUD != null)
             propertyAddressHUD.setText(GUI1.getCurrentHUDReportPropertyAddress() == null ? "" : GUI1.getCurrentHUDReportPropertyAddress());

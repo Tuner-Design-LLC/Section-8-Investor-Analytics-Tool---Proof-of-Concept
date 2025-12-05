@@ -24,11 +24,14 @@ public class ReportGUI {
     private ArrayList<FMRReport> FMRReportsFiltered = new ArrayList<>();
     private ArrayList<PHAReport> PHAReportsFiltered = new ArrayList<>();
     private ArrayList<HUDReport> HUDreports = new ArrayList<>();
+    private ArrayList<HUDReport> HUDReportsFiltered = new ArrayList<>();
+    private Boolean filterEnabledHUD;
      
 
     public ReportGUI(){
         filterEnabledFMR = false;
         filterEnabledPHA = false;
+        filterEnabledHUD = false;
        
         currentReportFMR =0;
         currentReportPHA=0;
@@ -40,6 +43,29 @@ public class ReportGUI {
 
     public int getNumOfReportsHUD(){
         return HUDreports.size();
+    }
+
+    public int getNumOfFilteredReportsHUD(){
+        return HUDReportsFiltered.size();
+    }
+
+    //create a filtered list of reports by state HUD
+    public void filterReportsByStateHUD(String stateKey){
+        for(HUDReport report: HUDreports){
+            if(Objects.equals(report.getStateName(), stateKey)){
+                HUDReportsFiltered.add(report);
+            }
+        }
+    }
+
+    //remove all filtered data HUD
+    public void resetFilterReportListHUD(){
+        HUDReportsFiltered = new ArrayList<>();
+    }
+
+    //toggle the filter on / off HUD
+    public void toggleFilterHUD(){
+        filterEnabledHUD = !filterEnabledHUD;
     }
 
     // Returns true if at least one parsed HUD report contains expected HUD fields
@@ -630,7 +656,8 @@ public class ReportGUI {
     public double getAverageHudMedianIncome(){
         double sum = 0.0;
         int count = 0;
-        for (HUDReport r : HUDreports){
+        ArrayList<HUDReport> source = filterEnabledHUD ? HUDReportsFiltered : HUDreports;
+        for (HUDReport r : source){
             if (r == null) continue;
             String ami = r.getAmiMedianFamilyIncome();
             if (ami == null) continue;
@@ -652,7 +679,8 @@ public class ReportGUI {
     public double getAverageHudVacancyRate(){
         double sum = 0.0;
         int count = 0;
-        for (HUDReport r : HUDreports){
+        ArrayList<HUDReport> source = filterEnabledHUD ? HUDReportsFiltered : HUDreports;
+        for (HUDReport r : source){
             if (r == null) continue;
             String val = r.getVacancyRate();
             if (val == null) continue;
@@ -674,7 +702,8 @@ public class ReportGUI {
     public double getAverageHudInspectionScore(){
         double sum = 0.0;
         int count = 0;
-        for (HUDReport r : HUDreports){
+        ArrayList<HUDReport> source = filterEnabledHUD ? HUDReportsFiltered : HUDreports;
+        for (HUDReport r : source){
             if (r == null) continue;
             String val = r.getHudInspectionScore();
             if (val == null) continue;

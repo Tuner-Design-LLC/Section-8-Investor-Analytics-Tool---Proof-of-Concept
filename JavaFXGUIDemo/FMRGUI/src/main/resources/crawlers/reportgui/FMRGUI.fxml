@@ -335,14 +335,14 @@
                                                     </font>
                                                 </Label>
                                                 <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="129.0" text="Total Filtered Reports:" GridPane.rowIndex="1" />
-                                                <TextField editable="false" prefHeight="25.0" prefWidth="90.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="TotalFilteredReportsHUD" editable="false" prefHeight="25.0" prefWidth="90.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                 <Button fx:id="stateSelectionButtonHUD" onAction="#showHUDContextMenu" prefWidth="150.0" text="Select State" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                             </children>
                                         </GridPane>
                                     </children>
                                 </VBox>
-                                <Button layoutX="954.0" layoutY="31.0" mnemonicParsing="false" text="Filter" />
-                                <CheckBox contentDisplay="CENTER" layoutX="845.0" layoutY="35.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="88.0" text="Use Filters" />
+                                <Button fx:id="FilterButtonHUD" layoutX="954.0" layoutY="31.0" mnemonicParsing="false" onAction="#FilterButtonHUD" text="Filter" />
+                                <CheckBox fx:id="UseFiltersHUD" contentDisplay="CENTER" layoutX="845.0" layoutY="35.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="88.0" onAction="#ToggleFiltersHUD" text="Use Filters" />
                                 <Label layoutX="251.0" layoutY="9.0" text="Current Report" />
                                 <TextField fx:id="CurrentReportHUD" alignment="CENTER" editable="false" layoutX="243.0" layoutY="31.0" prefHeight="25.0" prefWidth="94.0" />
                                 <Button layoutX="346.0" layoutY="31.0" mnemonicParsing="false" onAction="#IncreaseCurrentReportHUD" prefWidth="40.0" text="+" />
