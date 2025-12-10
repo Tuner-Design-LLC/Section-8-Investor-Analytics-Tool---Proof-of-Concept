@@ -1076,6 +1076,27 @@ public class ReportGUIController {
 
     //update all FMR text fields
     private void updateReportGUIFMR(){
+        // If there are no FMR reports, clear the FMR display fields (match HUD behavior)
+        if (GUI1.getNumOfReportsFMR() == 0) {
+            if (CurrentReport != null) CurrentReport.setText("");
+            if (TotalReports != null) TotalReports.setText(String.format("%d", GUI1.getTotalNumOfReports()));
+            if (TotalReportsFMR != null) TotalReportsFMR.setText("0");
+            if (TotalFilteredReports != null) TotalFilteredReports.setText("0");
+            // clear single-report fields
+            if (FiscalYear != null) FiscalYear.setText("");
+            if (CountyName != null) CountyName.setText("");
+            if (NumBedrooms != null) NumBedrooms.setText("");
+            if (FMRNumber != null) FMRNumber.setText("");
+            if (HouseholdIncome != null) HouseholdIncome.setText("");
+            if (MarketType != null) MarketType.setText("");
+            if (ZipCode != null) ZipCode.setText("");
+            if (State != null) State.setText("");
+            if (FMRAverage != null) FMRAverage.setText("");
+            if (IncomeAverage != null) IncomeAverage.setText("");
+            if (BedroomAverage != null) BedroomAverage.setText("");
+            return;
+        }
+
         CurrentReport.setText(String.format("%d",GUI1.getCurrentReportFMR()+1));
         TotalReports.setText(String.format("%d",GUI1.getTotalNumOfReports()));
         TotalReportsFMR.setText(String.format("%d",GUI1.getNumOfReportsFMR()));
@@ -1118,6 +1139,37 @@ public class ReportGUIController {
 
     //update all PHA text fields
     private void updateReportGUIPHA() {
+        // If there are no PHA reports, clear PHA display fields (match HUD behavior)
+        if (GUI1.getNumOfReportsPHA() == 0) {
+            if (CurrentReportPHA != null) CurrentReportPHA.setText("");
+            if (TotalReports != null) TotalReports.setText(String.format("%d", GUI1.getTotalNumOfReports()));
+            if (TotalReportsPHA != null) TotalReportsPHA.setText("0");
+            if (TotalFilteredReportsPHA != null) TotalFilteredReportsPHA.setText("0");
+            // clear PHA-specific fields
+            if (StatePHA != null) StatePHA.setText("");
+            if (CityPHA != null) CityPHA.setText("");
+            if (CountyNamePHA != null) CountyNamePHA.setText("");
+            if (ZipCodePHA != null) ZipCodePHA.setText("");
+            if (AddressPHA != null) AddressPHA.setText("");
+            if (JurisdictionPHA != null) JurisdictionPHA.setText("");
+            if (PHACode != null) PHACode.setText("");
+            if (DirectorPHA != null) DirectorPHA.setText("");
+            if (PhonePHA != null) PhonePHA.setText("");
+            if (FaxPHA != null) FaxPHA.setText("");
+            if (EmailPHA != null) EmailPHA.setText("");
+            if (HCVUnitsPHA != null) HCVUnitsPHA.setText("");
+            if (OccupancyRatePHA != null) OccupancyRatePHA.setText("");
+            if (HCVUtilRatePHA != null) HCVUtilRatePHA.setText("");
+            if (InspectCompPHA != null) InspectCompPHA.setText("");
+            if (TenantIncomePHA != null) TenantIncomePHA.setText("");
+            if (AvgHCVUnitsPHA != null) AvgHCVUnitsPHA.setText("");
+            if (AvgOccupancyRatePHA != null) AvgOccupancyRatePHA.setText("");
+            if (AvgHCVUtilRatePHA != null) AvgHCVUtilRatePHA.setText("");
+            if (AvgInspectCompPHA != null) AvgInspectCompPHA.setText("");
+            if (MedTenantIncomePHA != null) MedTenantIncomePHA.setText("");
+            return;
+        }
+
         CurrentReportPHA.setText(String.format("%d", GUI1.getCurrentReportPHA() + 1));
         TotalReports.setText(String.format("%d", GUI1.getTotalNumOfReports()));
         TotalReportsPHA.setText(String.format("%d", GUI1.getNumOfReportsPHA()));
