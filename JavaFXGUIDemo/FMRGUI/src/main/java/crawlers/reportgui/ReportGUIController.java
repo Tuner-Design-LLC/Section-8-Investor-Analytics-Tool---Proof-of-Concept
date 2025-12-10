@@ -36,6 +36,8 @@ import java.io.IOException;
 public class ReportGUIController {
     //BASE GUI USED FOR ALL REPORTS
     private ReportGUI GUI1 = new ReportGUI();
+    // remember last directory used by the file chooser during this session
+    private File lastBrowseDir = null;
 
     @FXML
     private TextField AddressPHA;
@@ -134,11 +136,24 @@ public class ReportGUIController {
                 new FileChooser.ExtensionFilter("All Files", "*.*")
         );
 
+        // If we have a remembered directory from this session, open there
+        try {
+            if (lastBrowseDir != null && lastBrowseDir.exists() && lastBrowseDir.isDirectory()) {
+                chooser.setInitialDirectory(lastBrowseDir);
+            } else {
+                // fall back to user's home folder
+                File home = new File(System.getProperty("user.home"));
+                if (home.exists() && home.isDirectory()) chooser.setInitialDirectory(home);
+            }
+        } catch (Exception ignored) {}
+
         File selected = chooser.showOpenDialog(ReportPath.getScene().getWindow());
         if (selected != null) {
             String path = selected.getAbsolutePath();
             // populate the existing ReportPath field (top browse field)
             ReportPath.setText(path);
+            // remember the folder for next time
+            try { lastBrowseDir = selected.getParentFile(); } catch (Exception ignored) {}
         }
     }
 
