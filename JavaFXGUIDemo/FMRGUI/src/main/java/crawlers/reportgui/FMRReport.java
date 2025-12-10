@@ -230,5 +230,10 @@ public class FMRReport {
     public void setCrawlerRunData(String crawlerRunData) {
         this.crawlerRunData = crawlerRunData;
     }
+
+    @Override
+    public String toString() {
+        return String.format("FMR ID: %-4s %-6s %-4s %s %-10s",Integer.parseInt(reportID)+1,fiscalYear,stateCode,countyName,zipCode);
+    }
 }
 
