@@ -83,4 +83,9 @@ public class HUDReport {
 
     public String getAssistedUnits() { return assistedUnits; }
     public void setAssistedUnits(String assistedUnits) { this.assistedUnits = assistedUnits; }
+
+    @Override
+    public String toString() {
+        return String.format("HUD ID: %-4s %-6s %-4s %s %-10s",Integer.parseInt(reportID)+1,fiscalYear,stateCode,countyName,zipCode);
+    }
 }

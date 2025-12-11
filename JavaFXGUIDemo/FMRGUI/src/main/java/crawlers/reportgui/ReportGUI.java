@@ -556,6 +556,16 @@ public class ReportGUI {
         return FMRreports;
     }
 
+    //Get HUD Report List for list view
+    public ArrayList<HUDReport> getHUDReportList(){
+        return HUDreports;
+    }
+
+    //Get PHA Report List for list view
+    public ArrayList<PHAReport> getPHAReportList(){
+        return PHAreports;
+    }
+
     //get methods for PHA reports
     public String getCurrentPHAReportState(){
         return PHAreports.get(currentReportPHA).getStateName();

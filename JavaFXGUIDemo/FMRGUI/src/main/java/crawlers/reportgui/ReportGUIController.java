@@ -36,7 +36,13 @@ public class ReportGUIController {
     private File lastBrowseDir = null;
 
     @FXML
-    private ListView<FMRReport> FMRList;
+    private ListView<FMRReport> FMRListView;
+
+    @FXML
+    private ListView<HUDReport> HUDListView;
+
+    @FXML
+    private ListView<PHAReport> PHAListView;
 
     @FXML
     private TextField AddressPHA;
@@ -471,13 +477,36 @@ public class ReportGUIController {
         ListView<FMRReport> FMRReportList = new ListView<FMRReport>();
         ObservableList<FMRReport> reports = FXCollections.observableArrayList(GUI1.getFMRReportList());
         FMRReportList.setItems(reports);
-
         //create listener to get the selected report and update text fields
-        FMRList.getSelectionModel().selectedIndexProperty().addListener((obs, oldIndex, newIndex) -> {
+        FMRListView.getSelectionModel().selectedIndexProperty().addListener((obs, oldIndex, newIndex) -> {
             //update pointer to selected report
             GUI1.setCurrentReportFMR((Integer) newIndex);
             //update the text fields
             updateReportGUIFMR();
+        });
+
+        // creation of HUD List
+        ListView<HUDReport> HUDReportList = new ListView<HUDReport>();
+        ObservableList<HUDReport> reportsHUD = FXCollections.observableArrayList(GUI1.getHUDReportList());
+        HUDReportList.setItems(reportsHUD);
+        //create listener to get the selected report and update text fields
+        HUDListView.getSelectionModel().selectedIndexProperty().addListener((obs, oldIndex, newIndex) -> {
+            //update pointer to selected report
+            GUI1.setCurrentReportHUD((Integer) newIndex);
+            //update the text fields
+            updateReportGUIHUD();
+        });
+
+        // creation of PHA List
+        ListView<PHAReport> PHAReportList = new ListView<PHAReport>();
+        ObservableList<PHAReport> reportsPHA = FXCollections.observableArrayList(GUI1.getPHAReportList());
+        PHAReportList.setItems(reportsPHA);
+        //create listener to get the selected report and update text fields
+        PHAListView.getSelectionModel().selectedIndexProperty().addListener((obs, oldIndex, newIndex) -> {
+            //update pointer to selected report
+            GUI1.setCurrentReportPHA((Integer) newIndex);
+            //update the text fields
+            updateReportGUIPHA();
         });
     }
 
@@ -971,7 +1000,7 @@ public class ReportGUIController {
     @FXML //decrease the currently selected report by one and update GUI
     void DecreaseCurrentReportFMR(ActionEvent event) {
         int temp = GUI1.getCurrentReportFMR();
-        FMRList.getSelectionModel().clearSelection();
+        FMRListView.getSelectionModel().clearSelection();
         GUI1.setCurrentReportFMR(temp);
         GUI1.decreaseCurrentReportFMR();
 
@@ -981,7 +1010,7 @@ public class ReportGUIController {
     @FXML //increase the currently selected report by one and update GUI
     void IncreaseCurrentReportFMR(ActionEvent event) {
         int temp = GUI1.getCurrentReportFMR();
-        FMRList.getSelectionModel().clearSelection();
+        FMRListView.getSelectionModel().clearSelection();
         GUI1.setCurrentReportFMR(temp);
         GUI1.increaseCurrentReportFMR();
 
@@ -990,6 +1019,9 @@ public class ReportGUIController {
 
     @FXML //decrease the currently selected report by one and update GUI
     void DecreaseCurrentReportPHA(ActionEvent event) {
+        int temp = GUI1.getCurrentReportPHA();
+        PHAListView.getSelectionModel().clearSelection();
+        GUI1.setCurrentReportPHA(temp);
         GUI1.decreaseCurrentReportPHA();
 
         updateReportGUIPHA();
@@ -997,6 +1029,9 @@ public class ReportGUIController {
 
     @FXML //increase the currently selected report by one and update GUI
     void IncreaseCurrentReportPHA(ActionEvent event) {
+        int temp = GUI1.getCurrentReportPHA();
+        PHAListView.getSelectionModel().clearSelection();
+        GUI1.setCurrentReportPHA(temp);
         GUI1.increaseCurrentReportPHA();
 
         updateReportGUIPHA();
@@ -1004,6 +1039,9 @@ public class ReportGUIController {
 
     @FXML //decrease the currently selected HUD report by one and update GUI
     void DecreaseCurrentReportHUD(ActionEvent event) {
+        int temp = GUI1.getCurrentReportHUD();
+        HUDListView.getSelectionModel().clearSelection();
+        GUI1.setCurrentReportHUD(temp);
         GUI1.decreaseCurrentReportHUD();
 
         updateReportGUIHUD();
@@ -1011,6 +1049,9 @@ public class ReportGUIController {
 
     @FXML //increase the currently selected HUD report by one and update GUI
     void IncreaseCurrentReportHUD(ActionEvent event) {
+        int temp = GUI1.getCurrentReportHUD();
+        HUDListView.getSelectionModel().clearSelection();
+        GUI1.setCurrentReportHUD(temp);
         GUI1.increaseCurrentReportHUD();
 
         updateReportGUIHUD();
@@ -1021,7 +1062,7 @@ public class ReportGUIController {
         int tempReportID = Integer.parseInt(this.ManualEnterReport.getText());
 
         if (tempReportID > 0 && tempReportID < GUI1.getNumOfReportsFMR()+1){
-            FMRList.getSelectionModel().clearSelection();
+            FMRListView.getSelectionModel().clearSelection();
             GUI1.setCurrentReportFMR(tempReportID-1);
             updateReportGUIFMR();
         }
@@ -1032,6 +1073,7 @@ public class ReportGUIController {
         int tempReportID = Integer.parseInt(this.ManualEnterReportPHA.getText());
 
         if (tempReportID > 0 && tempReportID < GUI1.getNumOfReportsPHA()+1){
+            FMRListView.getSelectionModel().clearSelection();
             GUI1.setCurrentReportPHA(tempReportID-1);
             updateReportGUIPHA();
         }
@@ -1042,6 +1084,7 @@ public class ReportGUIController {
         int tempReportID = Integer.parseInt(this.ManualEnterReportHUD.getText());
 
         if (tempReportID > 0 && tempReportID < GUI1.getNumOfReportsHUD()+1){
+            HUDListView.getSelectionModel().clearSelection();
             GUI1.setCurrentReportHUD(tempReportID-1);
             updateReportGUIHUD();
         }
@@ -1156,8 +1199,8 @@ public class ReportGUIController {
             BedroomAverage.setText(String.format("%.0f", avgBedrooms));
 
         ObservableList<FMRReport> reports = FXCollections.observableArrayList(GUI1.getFMRReportList());
-        FMRList.setItems(reports);
-        FMRList.getSelectionModel().clearSelection();
+        FMRListView.setItems(reports);
+        FMRListView.getSelectionModel().clearSelection();
     }
 
     //update all PHA text fields
@@ -1314,6 +1357,9 @@ public class ReportGUIController {
         else
             AvgHCVUnitsPHA.setText(String.format("%.0f", avgUnits));
 
+        ObservableList<PHAReport> reports = FXCollections.observableArrayList(GUI1.getPHAReportList());
+        PHAListView.setItems(reports);
+        PHAListView.getSelectionModel().clearSelection();
     }
 
     //update HUD text fields (basic currently: current/total counts)
@@ -1386,6 +1432,10 @@ public class ReportGUIController {
             if (Double.isNaN(avgInspect)) avgInspectScoreHUD.setText("");
             else avgInspectScoreHUD.setText(String.format("%.1f%%", avgInspect));
         }
+
+        ObservableList<HUDReport> reports = FXCollections.observableArrayList(GUI1.getHUDReportList());
+        HUDListView.setItems(reports);
+        HUDListView.getSelectionModel().clearSelection();
     }
 
     //clear all text fields to base values
@@ -1439,8 +1489,16 @@ public class ReportGUIController {
         if (availableUnitsHUD != null) availableUnitsHUD.setText("");
 
         //clear FMR List View
-        ObservableList<FMRReport> reports = FXCollections.observableArrayList(GUI1.getFMRReportList());
-        FMRList.setItems(reports);
+        ObservableList<FMRReport> reportsFMR = FXCollections.observableArrayList(GUI1.getFMRReportList());
+        FMRListView.setItems(reportsFMR);
+
+        //clear HUD List View
+        ObservableList<HUDReport> reportsHUD = FXCollections.observableArrayList(GUI1.getHUDReportList());
+        HUDListView.setItems(reportsHUD);
+
+        //clear PHA List View
+        ObservableList<PHAReport> reportsPHA = FXCollections.observableArrayList(GUI1.getPHAReportList());
+        PHAListView.setItems(reportsPHA);
     }
 
 }

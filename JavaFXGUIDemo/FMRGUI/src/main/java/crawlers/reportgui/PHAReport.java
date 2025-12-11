@@ -437,4 +437,9 @@ public class PHAReport {
     public void setContactLastVerified(String contactLastVerified) {
         this.contactLastVerified = contactLastVerified;
     }
+
+    @Override
+    public String toString() {
+        return String.format("PHA ID: %-4s %-4s %s %-10s",Integer.parseInt(reportID)+1,stateCode,countyName,zipCode);
+    }
 }
