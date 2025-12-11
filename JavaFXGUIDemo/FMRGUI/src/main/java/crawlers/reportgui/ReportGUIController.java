@@ -1,14 +1,10 @@
 package crawlers.reportgui;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.application.Platform;
@@ -38,6 +34,9 @@ public class ReportGUIController {
     private ReportGUI GUI1 = new ReportGUI();
     // remember last directory used by the file chooser during this session
     private File lastBrowseDir = null;
+
+    @FXML
+    private ListView<FMRReport> FMRList;
 
     @FXML
     private TextField AddressPHA;
@@ -467,6 +466,19 @@ public class ReportGUIController {
                 });
             }
         } catch (Exception ignored) {}
+
+        // creation of FMR List
+        ListView<FMRReport> FMRReportList = new ListView<FMRReport>();
+        ObservableList<FMRReport> reports = FXCollections.observableArrayList(GUI1.getFMRReportList());
+        FMRReportList.setItems(reports);
+
+        //create listener to get the selected report and update text fields
+        FMRList.getSelectionModel().selectedIndexProperty().addListener((obs, oldIndex, newIndex) -> {
+            //update pointer to selected report
+            GUI1.setCurrentReportFMR((Integer) newIndex);
+            //update the text fields
+            updateReportGUIFMR();
+        });
     }
 
     @FXML
@@ -958,6 +970,9 @@ public class ReportGUIController {
 
     @FXML //decrease the currently selected report by one and update GUI
     void DecreaseCurrentReportFMR(ActionEvent event) {
+        int temp = GUI1.getCurrentReportFMR();
+        FMRList.getSelectionModel().clearSelection();
+        GUI1.setCurrentReportFMR(temp);
         GUI1.decreaseCurrentReportFMR();
 
         updateReportGUIFMR();
@@ -965,6 +980,9 @@ public class ReportGUIController {
 
     @FXML //increase the currently selected report by one and update GUI
     void IncreaseCurrentReportFMR(ActionEvent event) {
+        int temp = GUI1.getCurrentReportFMR();
+        FMRList.getSelectionModel().clearSelection();
+        GUI1.setCurrentReportFMR(temp);
         GUI1.increaseCurrentReportFMR();
 
         updateReportGUIFMR();
@@ -1003,6 +1021,7 @@ public class ReportGUIController {
         int tempReportID = Integer.parseInt(this.ManualEnterReport.getText());
 
         if (tempReportID > 0 && tempReportID < GUI1.getNumOfReportsFMR()+1){
+            FMRList.getSelectionModel().clearSelection();
             GUI1.setCurrentReportFMR(tempReportID-1);
             updateReportGUIFMR();
         }
@@ -1135,6 +1154,10 @@ public class ReportGUIController {
             BedroomAverage.setText("");
         else
             BedroomAverage.setText(String.format("%.0f", avgBedrooms));
+
+        ObservableList<FMRReport> reports = FXCollections.observableArrayList(GUI1.getFMRReportList());
+        FMRList.setItems(reports);
+        FMRList.getSelectionModel().clearSelection();
     }
 
     //update all PHA text fields
@@ -1415,6 +1438,9 @@ public class ReportGUIController {
         if (ownerHUD != null) ownerHUD.setText("");
         if (availableUnitsHUD != null) availableUnitsHUD.setText("");
 
+        //clear FMR List View
+        ObservableList<FMRReport> reports = FXCollections.observableArrayList(GUI1.getFMRReportList());
+        FMRList.setItems(reports);
     }
 
 }
