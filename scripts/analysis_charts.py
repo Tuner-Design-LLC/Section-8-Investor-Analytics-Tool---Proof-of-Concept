@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generate analysis charts from Test Reports XML files using matplotlib.
+Generate analysis charts from Test Reports XML files using MatPlotLib.
 Saves three PNG charts to the provided output directory (or scripts/analysis_output by default).
 
 Charts:
@@ -23,14 +23,14 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-
+# Helper to find text of a child tag (case insensitive)
 def find_tag_text(elem, tag):
     for child in elem:
         if child.tag.lower() == tag.lower():
             return child.text
     return None
 
-
+# Parse HUD XML report file and extract relevant fields
 def parse_hud_from_file(path):
     try:
         tree = ET.parse(path)
@@ -64,7 +64,7 @@ def parse_hud_from_file(path):
         reports.append({'state': state, 'county': county, 'ami': ami_v, 'vacancy': vac_v, 'inspection': insp_v, 'assisted': assisted_v})
     return reports
 
-
+# Parse PHA XML report file and extract relevant fields
 def parse_pha_from_file(path):
     try:
         tree = ET.parse(path)
@@ -88,7 +88,7 @@ def parse_pha_from_file(path):
         reports.append({'county': county, 'avg_tenant_income': avg_v, 'avg_tenant_rent_share': rent_v})
     return reports
 
-
+# Gather all HUD reports from XML files in the directory
 def gather_reports(test_reports_dir):
     files = glob.glob(os.path.join(test_reports_dir, '*.xml'))
     all_reports = []
@@ -96,7 +96,7 @@ def gather_reports(test_reports_dir):
         all_reports.extend(parse_hud_from_file(f))
     return all_reports
 
-
+# Gather all PHA reports from XML files in the directory
 def gather_pha_reports(test_reports_dir):
     files = glob.glob(os.path.join(test_reports_dir, '*.xml'))
     all_reports = []
@@ -104,12 +104,12 @@ def gather_pha_reports(test_reports_dir):
         all_reports.extend(parse_pha_from_file(f))
     return all_reports
 
-
+# Ensure output directory exists
 def ensure_out(dirpath):
     os.makedirs(dirpath, exist_ok=True)
     return dirpath
 
-
+# Chart functions
 def chart_inspection_hist(reports, outpath):
     vals = [r['inspection'] for r in reports if r['inspection'] is not None]
     if not vals:
@@ -123,7 +123,7 @@ def chart_inspection_hist(reports, outpath):
     plt.savefig(outpath)
     plt.close()
 
-
+# Chart average vacancy rate by state
 def chart_vacancy_by_state(reports, outpath):
     # Aggregate vacancy by county instead of state
     bycounty = defaultdict(list)
@@ -131,7 +131,7 @@ def chart_vacancy_by_state(reports, outpath):
         if r['vacancy'] is not None and r.get('county'):
             bycounty[r.get('county')].append(r['vacancy'])
     if not bycounty:
-        # fallback sample
+        # Fallback sample
         bycounty = {'SomeCounty':[0.05,0.06], 'OtherCounty':[0.04], 'ThirdCounty':[0.07]}
     counties = []
     avgs = []
@@ -147,7 +147,7 @@ def chart_vacancy_by_state(reports, outpath):
     plt.savefig(outpath)
     plt.close()
 
-
+# Chart average AMI by county
 def chart_ami_by_county(reports, outpath):
     bycounty = defaultdict(list)
     for r in reports:
@@ -169,9 +169,9 @@ def chart_ami_by_county(reports, outpath):
     plt.savefig(outpath)
     plt.close()
 
-
+# Chart median tenant income by county
 def chart_median_tenant_income_by_county(reports, outpath):
-    # reports: list of dicts with 'county' and 'avg_tenant_income'
+    # Reports: list of dicts with 'county' and 'avg_tenant_income'
     bycounty = defaultdict(list)
     for r in reports:
         if r.get('avg_tenant_income') is not None and r.get('county'):
@@ -195,7 +195,7 @@ def chart_median_tenant_income_by_county(reports, outpath):
     plt.savefig(outpath)
     plt.close()
 
-
+# Chart total assisted units by county
 def chart_assisted_units_by_county(reports, outpath):
     # Sum assisted units by county from HUD reports
     bycounty = defaultdict(int)
@@ -215,7 +215,7 @@ def chart_assisted_units_by_county(reports, outpath):
     plt.savefig(outpath)
     plt.close()
 
-
+# Chart average tenant rent share by county
 def chart_avg_rent_share_by_county(pha_reports, outpath):
     # Average avg_tenant_rent_share by county from PHA reports.
     # Use county names from the PHA reports even if some have missing rent-share values.
@@ -245,7 +245,7 @@ def chart_avg_rent_share_by_county(pha_reports, outpath):
             if vals:
                 avgs.append(sum(vals) / len(vals))
             else:
-                # show 0% if no data for this county
+                # Show 0% if no data for this county
                 avgs.append(0.0)
     plt.figure(figsize=(8,4))
     plt.bar(counties, [v*100 for v in avgs], color='#fc8d62')
@@ -256,7 +256,7 @@ def chart_avg_rent_share_by_county(pha_reports, outpath):
     plt.savefig(outpath)
     plt.close()
 
-
+# Main function
 def main():
     base_dir = os.getcwd()
     test_reports_dir = os.path.join(base_dir, 'Test Reports')

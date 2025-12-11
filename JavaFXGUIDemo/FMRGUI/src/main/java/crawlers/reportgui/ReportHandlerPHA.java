@@ -5,6 +5,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.ArrayList;
 
+// ReportHandlerPHA class to parse PHA report XML data.
 public class ReportHandlerPHA extends DefaultHandler {
 
     private ArrayList<PHAReport> reports = new ArrayList<>();
@@ -15,7 +16,7 @@ public class ReportHandlerPHA extends DefaultHandler {
         return reports;
     }
 
-    @Override//create each report and get its id
+    @Override // Create each report and get its id
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
         if (qName.equalsIgnoreCase("PHA")) {
             currentReport = new PHAReport();
@@ -24,12 +25,14 @@ public class ReportHandlerPHA extends DefaultHandler {
         content.setLength(0);
     }
 
+    // Function for reading characters between tags
     @Override
     public void characters(char[] ch, int start, int length) {
         content.append(ch, start, length);
     }
 
-    @Override//function for adding data to the report class
+    // Function for adding data to the report class
+    @Override
     public void endElement(String uri, String localName, String qName) {
 
         if (currentReport != null) {

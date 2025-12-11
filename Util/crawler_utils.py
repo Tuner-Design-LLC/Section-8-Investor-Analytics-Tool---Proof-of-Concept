@@ -3,7 +3,6 @@ import pandas as pd
 import xml.etree.ElementTree as ET
 from typing import List, Optional, Callable, Iterable
 
-
 def load_dataset(path: str, dtype=str) -> pd.DataFrame:
     """Load CSV or Excel into a pandas DataFrame. Raises FileNotFoundError if missing."""
     if path is None:
@@ -83,7 +82,7 @@ def dataframe_to_xml(df: pd.DataFrame, out_path: str, root_name: str = "Reports"
     with open(out_path, 'wb') as f:
         tree.write(f, encoding='utf-8', xml_declaration=True, short_empty_elements=False)
 
-
+# Example id generator: sequential integers starting from a given number
 def sequential_id_generator(start: int = 0):
     def gen():
         i = start

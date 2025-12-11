@@ -4,6 +4,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 import java.util.ArrayList;
 
+// ReportHandlerHUD class to parse HUD report XML data.
 public class ReportHandlerHUD extends DefaultHandler {
     private ArrayList<HUDReport> reports = new ArrayList<>();
     private HUDReport currentReport;
@@ -11,6 +12,7 @@ public class ReportHandlerHUD extends DefaultHandler {
 
     public ArrayList<HUDReport> getReports() { return reports; }
 
+    // Create each report and get its id
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
         if (qName.equalsIgnoreCase("Report")) {
@@ -20,11 +22,13 @@ public class ReportHandlerHUD extends DefaultHandler {
         content.setLength(0);
     }
 
+    // Function for reading characters between tags
     @Override
     public void characters(char[] ch, int start, int length) {
         content.append(ch, start, length);
     }
 
+    // Function for adding data to the report class
     @Override
     public void endElement(String uri, String localName, String qName) {
         if (currentReport != null) {

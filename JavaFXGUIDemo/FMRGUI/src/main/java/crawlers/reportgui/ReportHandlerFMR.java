@@ -4,6 +4,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 import java.util.ArrayList;
 
+// ReportHandlerFMR class to parse FMR report XML data.
 public class ReportHandlerFMR extends DefaultHandler {
 
     private ArrayList<FMRReport> reports = new ArrayList<>();
@@ -14,7 +15,7 @@ public class ReportHandlerFMR extends DefaultHandler {
         return reports;
     }
 
-    @Override//create each report and get its id
+    @Override //Create each report and get its id
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
         if (qName.equalsIgnoreCase("Report")) {
             currentReport = new FMRReport();
@@ -23,14 +24,14 @@ public class ReportHandlerFMR extends DefaultHandler {
         content.setLength(0);
     }
 
-    @Override
+    @Override // Function for reading characters between tags
     public void characters(char[] ch, int start, int length) {
         content.append(ch, start, length);
     }
 
-    @Override//function for adding data to the report class
+    @Override // Function for adding data to the report class
     public void endElement(String uri, String localName, String qName) {
-
+        // Add data to the current report based on the XML element name
         if (currentReport != null) {
             switch (qName) {
                 case "FiscalYear":
