@@ -207,16 +207,16 @@
                                 <!-- Open Reports moved to top; removed per design -->
                                 <Label alignment="CENTER_RIGHT" layoutX="1033.0" layoutY="35.0" prefHeight="17.0" prefWidth="129.0" text="FMR Reports Loaded:" />
                                 <TextField fx:id="TotalReportsFMR" editable="false" layoutX="1162.0" layoutY="31.0" prefHeight="25.0" prefWidth="90.0" text="0" />
-                              <VBox alignment="CENTER" layoutX="396.0" layoutY="234.0" prefHeight="277.0" prefWidth="850.0">
-                                 <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="272.0" text="Report List View">
-                                       <font>
-                                          <Font size="30.0" />
-                                       </font>
-                                    </Label>
-                                    <ListView fx:id="FMRList" prefHeight="261.0" prefWidth="850.0" />
-                                 </children>
-                              </VBox>
+                                        <VBox alignment="CENTER" prefWidth="850.0" AnchorPane.topAnchor="234.0" AnchorPane.leftAnchor="396.0" AnchorPane.rightAnchor="14.0" AnchorPane.bottomAnchor="10.0">
+                                            <children>
+                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="272.0" text="Report List View">
+                                                    <font>
+                                                        <Font size="30.0" />
+                                                    </font>
+                                                </Label>
+                                                <ListView fx:id="FMRList" prefWidth="850.0" VBox.vgrow="ALWAYS" />
+                                            </children>
+                                        </VBox>
                             </children>
                         </AnchorPane>
                     </content>
